@@ -1,0 +1,76 @@
+version: "3.9"
+
+services:
+  react-app:
+    image: react-app
+    restart: always
+    build:
+     context: ./frontend-v1
+     dockerfile: Dockerfile
+    container_name: react-app
+    volumes:
+      - /app/node_modules
+      - ./frontend-v1:/app
+    ports:
+      - 19002:19002
+    networks:
+      - technight
+    depends_on:
+      - mongodb
+
+  api-server:
+    image: api-server
+    restart: always
+    build: 
+      context: ./backend-v1
+      dockerfile: Dockerfile
+    container_name: api-server
+    volumes:
+      - /app/node_modules
+      - ./backend-v1:/app
+    ports:
+      - 5000:5000
+    environment:
+      NODE_ENV: ${NODE_ENV} 
+      MONGO_URI: mongodb://${MONGO_ROOT_USERNAME}:${MONGO_ROOT_PASSWORD}@mongodb
+    networks:
+      - technight
+    depends_on:
+      - mongodb
+
+  mongodb: 
+    image: mongo
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+    volumes:
+      - mongodb-data/data/db
+    networks:
+      - technight
+
+  mongo-express:
+    image: mongo-express
+    depends_on:
+      - mongodb
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_BASICAUTH_USERNAME: admin
+      ME_CONFIG_BASICAUTH_PASSWORD: admin12345
+    volumes:
+      - mongodb-data
+    networks:
+      - technight
+
+networks:
+  technight:
+    driver: bridge
+volumes:
+  mongodb-data:
+    driver: local

@@ -1,0 +1,22 @@
+version: '3'
+services:
+  node-app:
+    restart:
+      always
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    env_file:
+      - ./.env
+    environment:
+      - MONGO_USER=admin
+      - MONGO_PASSWORD=admin12345
+    command: npm run dev
+    depends_on:
+      - mongo
+  
+  mongo:
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin12345
+
