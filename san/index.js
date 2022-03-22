@@ -1,21 +1,14 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
-const session = require("express-session");
-const redis = require("redis");
-let RedisStore = require("connect-redis")(session);
 const {
   MONGO_PASSWORD,
   MONGO_PORT,
   MONGO_USER,
   MONGO_IP,
-  REDIS_URL,
-  REDIS_PORT,
-  SESSION_SECRET,
+  DB_NAME,
 } = require("./config/config");
-let redisClient = redis.createClient({
-  host: REDIS_URL,
-  port: REDIS_PORT,
-});
+
+
 const postRouter = require("./routes/postRoutes");
 const userRouter = require("./routes/userRoutes");
 
@@ -23,25 +16,15 @@ const app = express();
 
 app.use(express.json());
 
-app.use(
-  session({
-    store: new RedisStore({ client: redisClient }),
-    secret: SESSION_SECRET,
-    cookie: {
-      secure: false,
-      resave: false,
-      saveUninitialized: false,
-      httpOnly: true,
-      maxAge: 30000,
-    },
-  })
-);
 const port = 5000;
-const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=admin`;
+const mongoURL = `mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/${DB_NAME}?authSource=admin`;
 
 mongoose
-  .connect(mongoURL)
-  .then(() => console.log("Succesfully connected smeh"))
+  .connect(mongoURL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true
+  })
+  .then(() => console.log("Succesfully connected"))
   .catch((e) => console.log(e));
 
 app.get("/", (req, res) => {
