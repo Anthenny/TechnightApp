@@ -1,84 +1,51 @@
-const Post = require('../models/postModel');
+// Basic crud functionality
 
-exports.getAllPosts = async (req, res, next) => {
-  try {
-    const posts = await Post.find();
-    res.status(200).json({
-      status: 'succes',
-      results: posts.length,
-      data: { posts },
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: 'fail',
-      message: e,
-    });
-  }
-};
+// const Post = require('../models/postModel');
+// const catchAsync = require('../utils/catchAsync');
 
-exports.getOnePost = async (req, res, next) => {
-  try {
-    const post = await Post.findById(req.params.id);
+// exports.getAllPosts = catchAsync(async (req, res, next) => {
+//   const posts = await Post.find();
+//   res.status(200).json({
+//     status: 'succes',
+//     results: posts.length,
+//     data: { posts },
+//   });
+// });
 
-    res.status(200).json({
-      status: 'succes',
-      data: { post },
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: 'fail',
-      message: e.message,
-      stack: e,
-    });
-  }
-};
+// exports.getOnePost = catchAsync(async (req, res, next) => {
+//   const post = await Post.findById(req.params.id);
 
-exports.createPost = async (req, res, next) => {
-  try {
-    const post = await Post.create(req.body);
+//   res.status(200).json({
+//     status: 'succes',
+//     data: { post },
+//   });
+// });
 
-    res.status(200).json({
-      status: 'succes',
-      data: { post },
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: 'fail',
-      message: e,
-    });
-  }
-};
+// exports.createPost = catchAsync(async (req, res, next) => {
+//   const post = await Post.create(req.body);
 
-exports.updatePost = async (req, res, next) => {
-  try {
-    const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
-    });
+//   res.status(200).json({
+//     status: 'succes',
+//     data: { post },
+//   });
+// });
 
-    res.status(200).json({
-      status: 'succes',
-      data: { post },
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: 'fail',
-      message: e,
-    });
-  }
-};
+// exports.updatePost = catchAsync(async (req, res, next) => {
+//   const post = await Post.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-exports.deletePost = async (req, res, next) => {
-  try {
-    await Post.findByIdAndDelete(req.params);
+//   res.status(200).json({
+//     status: 'succes',
+//     data: { post },
+//   });
+// });
 
-    res.status(200).json({
-      status: 'succes',
-    });
-  } catch (e) {
-    res.status(400).json({
-      status: 'fail',
-      message: e,
-    });
-  }
-};
+// exports.deletePost = catchAsync(async (req, res, next) => {
+//   await Post.findByIdAndDelete(req.params);
+
+//   res.status(200).json({
+//     status: 'succes',
+//   });
+// });
