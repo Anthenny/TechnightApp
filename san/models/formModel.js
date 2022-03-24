@@ -1,10 +1,14 @@
 const mongoose = require("mongoose");
 
 const formSchema = new mongoose.Schema({
-    name: {
+    firstName: {
         type: String,
-        required: [true, "This form requires a name"],
+        required: [true, "This form requires a first name"],
         lowercase: true
+    },
+    lastName: {
+        type: String,
+        required: [true, "This form requires a last name"]
     },
     email: {
         type: String,
