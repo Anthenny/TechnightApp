@@ -1,5 +1,6 @@
-const User = require("../models/userModel");
-const bcrypt = require("bcryptjs");
+const bcrypt = require('bcryptjs');
+const User = require('../models/userModel');
+
 exports.signUp = async (req, res) => {
   const { username, password } = req.body;
   try {
@@ -8,14 +9,14 @@ exports.signUp = async (req, res) => {
     const newUser = await User.create({ username, password: hashedPassword });
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       data: {
         user: newUser,
       },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e.message,
     });
   }
@@ -28,8 +29,8 @@ exports.login = async (req, res) => {
 
     if (!user) {
       return res.status(404).json({
-        status: "fail",
-        message: "user not found",
+        status: 'fail',
+        message: 'user not found',
       });
     }
 
@@ -37,20 +38,20 @@ exports.login = async (req, res) => {
 
     if (!isCorrect) {
       res.status(400).json({
-        status: "fail",
-        message: "incorrect username or password",
+        status: 'fail',
+        message: 'incorrect username or password',
       });
     }
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       data: {
         user: user,
       },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e.message,
     });
   }

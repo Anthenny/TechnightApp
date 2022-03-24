@@ -1,16 +1,16 @@
-const Post = require("../models/postModel");
+const Post = require('../models/postModel');
 
 exports.getAllPosts = async (req, res, next) => {
   try {
     const posts = await Post.find();
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       results: posts.length,
       data: { posts },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e,
     });
   }
@@ -21,12 +21,12 @@ exports.getOnePost = async (req, res, next) => {
     const post = await Post.findById(req.params.id);
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       data: { post },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e.message,
       stack: e,
     });
@@ -38,12 +38,12 @@ exports.createPost = async (req, res, next) => {
     const post = await Post.create(req.body);
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       data: { post },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e,
     });
   }
@@ -57,12 +57,12 @@ exports.updatePost = async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
       data: { post },
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e,
     });
   }
@@ -73,11 +73,11 @@ exports.deletePost = async (req, res, next) => {
     await Post.findByIdAndDelete(req.params);
 
     res.status(200).json({
-      status: "succes",
+      status: 'succes',
     });
   } catch (e) {
     res.status(400).json({
-      status: "fail",
+      status: 'fail',
       message: e,
     });
   }
