@@ -1,17 +1,17 @@
-const express = require('express');
-const postController = require('../controllers/postController');
+// const express = require('express');
+// const postController = require('../controllers/postController');
 
-const router = express.Router();
+// const router = express.Router();
 
-router
-  .route('/:id')
-  .get(postController.getOnePost)
-  .patch(postController.updatePost)
-  .delete(postController.deletePost);
+// router
+//   .route('/:id')
+//   .get(postController.getOnePost)
+//   .patch(postController.updatePost)
+//   .delete(postController.deletePost);
 
-router
-  .route('/')
-  .get(postController.getAllPosts)
-  .post(postController.createPost);
+// router
+//   .route('/')
+//   .get(postController.getAllPosts)
+//   .post(postController.createPost);
 
-module.exports = router;
+// module.exports = router;

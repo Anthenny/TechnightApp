@@ -3,8 +3,8 @@ const rateLimit = require('express-rate-limit');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
-const postRouter = require('./routes/postRoutes');
-const userRouter = require('./routes/userRoutes');
+// const postRouter = require('./routes/postRoutes');
+// const userRouter = require('./routes/userRoutes');
 const formRouter = require('./routes/formRoutes');
 
 const app = express();
@@ -34,8 +34,8 @@ app.use((req, res, next) => {
 
 // Routes
 
-app.use('/api/v1/posts', postRouter);
-app.use('/api/v1/users', userRouter);
+// app.use('/api/v1/posts', postRouter);
+// app.use('/api/v1/users', userRouter);
 app.use('/api/v1/form', formRouter);
 
 app.all('*', (req, res, next) => {
