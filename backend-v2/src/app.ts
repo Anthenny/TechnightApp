@@ -1,5 +1,6 @@
 import express, { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
+import routes from './routes/formRoutes';
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/error.controller');
@@ -36,6 +37,8 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
     message: 'hi ee'
   });
 });
+
+routes(app);
 
 // Error handler
 app.all('*', (req: Request, res: Response, next: NextFunction) => {

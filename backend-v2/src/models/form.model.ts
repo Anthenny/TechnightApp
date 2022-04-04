@@ -5,7 +5,7 @@ export interface FormDocument extends mongoose.Document {
   firstName: string;
   lastName: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   company: string;
   role: string;
   refference: string;
@@ -32,7 +32,7 @@ const formSchema = new mongoose.Schema(
       lowercase: true
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       required: [true, 'This form requires a phone number']
     },
     company: {
