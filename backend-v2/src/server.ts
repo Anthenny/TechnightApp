@@ -17,6 +17,5 @@ mongoose
   })
   .catch((e: any) => {
     console.log('Could not connect to db');
-    console.log(mongoURL);
     console.log(e.message);
   });

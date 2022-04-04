@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 
-module.exports = (
+export function globalErrorHandler(
   err: any,
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error';
 
@@ -13,4 +13,4 @@ module.exports = (
     status: err.status,
     message: err.message
   });
-};
+}

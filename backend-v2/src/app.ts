@@ -1,9 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import rateLimit from 'express-rate-limit';
-import routes from './routes/formRoutes';
-
-const AppError = require('./utils/appError');
-const globalErrorHandler = require('./controllers/error.controller');
+import routes from './routes/routes';
+import AppError from './utils/appError';
+import { globalErrorHandler } from './controllers/error.controller';
+import { corsMiddleware } from './middleware/corsMiddleware';
 
 const app = express();
 
@@ -18,17 +18,7 @@ app.use(limiter);
 
 app.use(express.json({ limit: '20kb' }));
 
-app.use((req: Request, res: Response, next: NextFunction) => {
-  // At the star we can define a network like "localhost:3000" to make it more secure.
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-
-  next();
-});
+app.use(corsMiddleware);
 
 // Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
