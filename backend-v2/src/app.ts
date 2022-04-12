@@ -24,7 +24,7 @@ app.use(corsMiddleware);
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.json({
     status: 'succes',
-    message: 'hi ee'
+    message: 'You did it!'
   });
 });
 
