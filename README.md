@@ -20,9 +20,9 @@ This project is created using React Native on the frontend and Node.js on the ba
 
 # Getting started
 
-IMPORTANT Only the API is functioning at this point in time!
+Only the API is functioning at this point in time!
 
-//TODO Makefile and dockerfiles in the root dir so you can run all the commands from there.
+<!-- TODO Makefile and dockerfiles in the root dir so you can run all the commands from there. -->
 
 ## First time running the application
 
