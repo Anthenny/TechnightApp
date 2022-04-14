@@ -1,64 +1,149 @@
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  TextInput,
-  StyleSheet
-} from 'react-native';
+import { View, Text, StyleSheet, Keyboard } from 'react-native';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
+import Loader from './Loader';
+import Input from './Input';
+import Button from './Button';
+import { registerRootComponent } from 'expo';
+import { NavigationRouteContext } from '@react-navigation/native';
 
 export default function Form() {
   const [isChecked, setIsChecked] = useState(false);
+  const [inputs, setInputs] = useState({
+    naam: '',
+    email: '',
+    telefoonnummer: '',
+    bedrijfsnaam: '',
+    functie: '',
+    verwijzing: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false);
+
+  const handleOnChange = (text, input) => {
+    setInputs((prevState) => ({ ...prevState, [input]: text }));
+  };
+
+  const handleError = (errorMessage, input) => {
+    setErrors((prevState) => ({ ...prevState, [input]: errorMessage }));
+  };
 
   const checkboxHandler = () => {
     setIsChecked(!isChecked);
   };
 
-  const submitFormHandler = () => {
-    if (isChecked) console.log('true, je wilt op de hoogte gehouden worden');
-    if (!isChecked)
-      console.log('false, u wilt niet op de hoogte worden gehouden');
+  const validate = () => {
+    Keyboard.dismiss();
+    let isValid = true;
+
+    if (!inputs.email) {
+      handleError('Vul aub een email adress in', 'email');
+      isValid = false;
+    } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
+      handleError('Vul aub een geldig email adress in', 'email');
+      isValid = false;
+    }
+
+    if (!inputs.naam) {
+      handleError('Vul aub een geldige naam in', 'naam');
+      isValid = false;
+    }
+
+    if (!inputs.telefoonnummer) {
+      handleError('Vul aub een geldig telefoonnummer in', 'telefoonnummer');
+      isValid = false;
+    }
+
+    if (isValid) register();
+  };
+
+  const register = () => {
+    setLoading(true);
+    setTimeout(() => {
+      navigation;
+      setLoading(false);
+    }, 2000);
   };
 
   return (
-    <View style={styles.form__container}>
-      <Text style={styles.form__smallText}>Meld je gratis aan.</Text>
-      <Text style={styles.form__bigText}>
-        Schrijf je nu in voor de
-        <Text style={styles.form__bigText_span}>TechNight</Text>!
-      </Text>
+    <>
+      <Loader visible={loading} />
+      <View style={styles.form__container}>
+        <Text style={styles.form__smallText}>Meld je gratis aan.</Text>
+        <Text style={styles.form__bigText}>
+          Schrijf je nu in voor de
+          <Text style={styles.form__bigText_span}> TechNight</Text>!
+        </Text>
 
-      <View style={styles.form__row}>
-        <TextInput style={styles.form__input_half} placeholder="Voornaam" />
+        {/* <View style={styles.form__row}>
         <TextInput
-          style={styles.inputRow_input_half}
-          placeholder="Achternaam"
+          style={styles.form__input_half}
+          placeholder="Voornaam"
+          onChangeText={(text) => handleOnChange(text, 'voornaam')}
         />
+        <TextInput
+          style={styles.form__input_half}
+          placeholder="Achternaam"
+          onChangeText={(text) => handleOnChange(text, 'achternaam')}
+        />
+      </View> */}
+
+        <Input
+          placeholder="Volledige naam"
+          error={errors.naam}
+          onFocus={() => {
+            handleError(null, 'naam');
+          }}
+          onChangeText={(text) => handleOnChange(text, 'naam')}
+        />
+
+        <Input
+          placeholder="Email"
+          keyboardType="email-address"
+          error={errors.email}
+          onFocus={() => {
+            handleError(null, 'email');
+          }}
+          onChangeText={(text) => handleOnChange(text, 'email')}
+        />
+
+        <Input
+          placeholder="Telefoonnummer"
+          keyboardType="numeric"
+          error={errors.telefoonnummer}
+          onFocus={() => {
+            handleError(null, 'telefoonnummer');
+          }}
+          onChangeText={(text) => handleOnChange(text, 'telefoonnummer')}
+        />
+
+        <Input
+          placeholder="Bedrijfsnaam"
+          onChangeText={(text) => handleOnChange(text, 'bedrijfsnaam')}
+        />
+
+        <Input
+          placeholder="Functie"
+          onChangeText={(text) => handleOnChange(text, 'functie')}
+        />
+
+        <Input
+          placeholder="Hoe heeft u van ons gehoord?"
+          onChangeText={(text) => handleOnChange(text, 'verwijzing')}
+        />
+
+        <CheckBox
+          center
+          title="Ik blijf graag op de hoogte van aankomende events"
+          containerStyle={styles.form__checkbox}
+          checked={isChecked}
+          checkedColor="#C0345F"
+          onPress={checkboxHandler}
+        />
+
+        <Button title={'ik meld me aan'} onPress={validate} />
       </View>
-
-      <TextInput style={styles.form__input} placeholder="Email" />
-      <TextInput style={styles.form__input} placeholder="Telefoonnummer" />
-      <TextInput style={styles.form__input} placeholder="Bedrijfsnaam" />
-      <TextInput style={styles.form__input} placeholder="Functie" />
-      <TextInput
-        style={styles.form__input}
-        placeholder="Hoe heeft u van ons gehoord"
-      />
-
-      <CheckBox
-        center
-        title="Ik blijf graag op de hoogte van aankomende events"
-        containerStyle={styles.form__checkbox}
-        checked={isChecked}
-        checkedColor="#C0345F"
-        onPress={checkboxHandler}
-      />
-
-      <TouchableOpacity style={styles.form__button}>
-        <Text style={styles.form__buttonText}>Ik meld me aan</Text>
-      </TouchableOpacity>
-    </View>
+    </>
   );
 }
 
@@ -80,7 +165,7 @@ const styles = StyleSheet.create({
   form__bigText_span: {
     color: '#C0345F'
   },
-  form__Row: {
+  form__row: {
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between'
@@ -93,32 +178,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     borderRadius: 6
   },
-  form__input: {
-    width: '100%',
-    marginBottom: 25,
-    borderWidth: 1,
-    padding: 12,
-    fontSize: 18,
-    borderRadius: 6
-  },
   form__checkbox: {
     width: '100%',
     backgroundColor: 'transparent',
     borderColor: 'transparent',
     fontSize: 16,
     marginBottom: 10
-  },
-  form__button: {
-    width: '100%',
-    backgroundColor: '#FF9200',
-    borderRadius: 6,
-    padding: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 80
-  },
-  form__buttonText: {
-    fontSize: 18,
-    color: '#fff'
   }
 });
