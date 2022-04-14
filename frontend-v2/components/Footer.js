@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, Image } from 'react-native'
-import React from 'react'
+import { View, Text, StyleSheet, Image } from 'react-native';
+import React from 'react';
 
 export default function Footer() {
   return (
@@ -10,19 +10,17 @@ export default function Footer() {
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/location_logo.png')}/>
-          <Text style={styles.footer__text}>
-            Stadionweg 57c
-          </Text>
+            source={require('../assets/location_logo.png')}
+          />
+          <Text style={styles.footer__text}>Stadionweg 57c</Text>
         </View>
 
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/scale_logo.png')}/>
-          <Text style={styles.footer__text}>
-            57560188
-          </Text>
+            source={require('../assets/scale_logo.png')}
+          />
+          <Text style={styles.footer__text}>57560188</Text>
         </View>
       </View>
 
@@ -30,19 +28,17 @@ export default function Footer() {
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/postcode_logo.png')}/>
-          <Text style={styles.footer__text}>
-            3077 AS, Rotterdam
-          </Text>
+            source={require('../assets/postcode_logo.png')}
+          />
+          <Text style={styles.footer__text}>3077 AS, Rotterdam</Text>
         </View>
 
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/toolbox_logo.png')}/>
-          <Text style={styles.footer__text}>
-            NL8526.32.824 B 01
-          </Text>
+            source={require('../assets/toolbox_logo.png')}
+          />
+          <Text style={styles.footer__text}>NL8526.32.824 B 01</Text>
         </View>
       </View>
 
@@ -50,19 +46,17 @@ export default function Footer() {
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/phone_logo.png')}/>
-          <Text style={styles.footer__text}>
-            010 - 3035929
-          </Text>
+            source={require('../assets/phone_logo.png')}
+          />
+          <Text style={styles.footer__text}>010 - 3035929</Text>
         </View>
 
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/euro_logo.png')}/>
-          <Text style={styles.footer__text}>
-            NL59 RABO 0107 3450 13
-          </Text>
+            source={require('../assets/euro_logo.png')}
+          />
+          <Text style={styles.footer__text}>NL59 RABO 0107 3450 13</Text>
         </View>
       </View>
 
@@ -70,20 +64,18 @@ export default function Footer() {
         <View style={styles.footer__row__item}>
           <Image
             style={styles.footer__image}
-            source={require('../assets/mail_logo.png')}/>
-          <Text style={styles.footer__text}>
-            info@developers.nl
-          </Text>
+            source={require('../assets/mail_logo.png')}
+          />
+          <Text style={styles.footer__text}>info@developers.nl</Text>
         </View>
       </View>
 
-    <Image 
-      style={styles.footer__circle}
-      source={require('../assets/technight_logo.png')}  
-    />
-
+      <Image
+        style={styles.footer__circle}
+        source={require('../assets/technight_logo.png')}
+      />
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -108,17 +100,16 @@ const styles = StyleSheet.create({
     width: '50%'
   },
   footer__image: {
-    marginRight: 10,
+    marginRight: 10
   },
   footer__text: {
     fontSize: 16,
     fontWeight: '300'
   },
   footer__circle: {
-
     position: 'absolute',
     bottom: '-30%',
     right: '-5%',
     borderRadius: 500
   }
-})
+});

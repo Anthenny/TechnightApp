@@ -1,9 +1,5 @@
-import Statusbar from "./Statusbar";
-import Form from "./Form";
-import Footer from "./Footer";
+import Statusbar from './Navbar';
+import Form from './Form';
+import Footer from './Footer';
 
-export {
-    Statusbar,
-    Form,
-    Footer
-}
+export { Statusbar, Form, Footer };
