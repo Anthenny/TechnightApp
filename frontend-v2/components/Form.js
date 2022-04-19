@@ -55,12 +55,21 @@ export default function Form({ navigation }) {
     }
 
     if (isValid) {
-      name = inputs.name;
-      email = inputs.email;
-      phoneNumber = inputs.phoneNumber;
-      company = inputs.company;
-      role = inputs.role;
-      refference = inputs.refference;
+      const name = inputs.name;
+      const email = inputs.email;
+      const phoneNumber = inputs.phoneNumber;
+      const company = inputs.company;
+      const role = inputs.role;
+      const refference = inputs.refference;
+
+      setInputs({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        company: '',
+        role: '',
+        refference: ''
+      });
 
       register(name, email, phoneNumber, company, role, refference);
     }
@@ -85,16 +94,19 @@ export default function Form({ navigation }) {
         refference
       });
 
-      if (response.status === 'succes') {
+      if (response.data.status === 'succes') {
         navigation.navigate('Succes');
+        console.log(response.data);
+      } else {
+        console.log(response.data.message);
+        // TODO check nog een keer voor succes anders error weergeven boven aan het formulier
       }
-
-      // TODO check nog een keer voor succes anders error weergeven boven aan het formulier
 
       setLoading(false);
     } catch (e) {
       // TODO Get the right error message, we only get a 500 error atm.
-      // console.log(e.message);
+      console.log(e);
+      console.log(response.data);
       setLoading(false);
     }
   };
@@ -111,6 +123,7 @@ export default function Form({ navigation }) {
 
         <Input
           placeholder="Volledige naam"
+          value={inputs.name}
           error={errors.name}
           onFocus={() => {
             handleError(null, 'name');
@@ -132,6 +145,7 @@ export default function Form({ navigation }) {
         <Input
           placeholder="Telefoonnummer"
           keyboardType="numeric"
+          value={inputs.phoneNumber}
           error={errors.phoneNumber}
           onFocus={() => {
             handleError(null, 'phoneNumber');
@@ -141,16 +155,19 @@ export default function Form({ navigation }) {
 
         <Input
           placeholder="Bedrijfsnaam"
+          value={inputs.company}
           onChangeText={(text) => handleOnChange(text, 'company')}
         />
 
         <Input
           placeholder="Functie"
+          value={inputs.role}
           onChangeText={(text) => handleOnChange(text, 'role')}
         />
 
         <Input
           placeholder="Hoe heeft u van ons gehoord?"
+          value={inputs.refference}
           onChangeText={(text) => handleOnChange(text, 'refference')}
         />
 
