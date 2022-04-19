@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 // Typescript definition
 export interface FormDocument extends mongoose.Document {
-  firstName: string;
-  lastName: string;
+  name: string;
   email: string;
   phoneNumber: string;
   company: string;
@@ -15,14 +14,9 @@ export interface FormDocument extends mongoose.Document {
 
 const formSchema = new mongoose.Schema(
   {
-    firstName: {
+    name: {
       type: String,
-      required: [true, 'This form requires a first name'],
-      lowercase: true
-    },
-    lastName: {
-      type: String,
-      required: [true, 'This form requires a last name'],
+      required: [true, 'This form requires a name'],
       lowercase: true
     },
     email: {

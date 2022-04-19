@@ -2,12 +2,13 @@ import { View, StyleSheet, TextInput, Text } from 'react-native';
 import React, { useState } from 'react';
 import COLORS from '../const/colors';
 
-export default function Input({ error, onFocus = () => {}, ...props }) {
+export default function Input({ ref, error, onFocus = () => {}, ...props }) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
     <>
       <TextInput
+        keyboardType="phone-pad"
         autoCorrect={false}
         onFocus={() => {
           onFocus();

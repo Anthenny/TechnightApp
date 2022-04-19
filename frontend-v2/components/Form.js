@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, Keyboard } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CheckBox } from 'react-native-elements';
+
+import client from '../api/client';
 import Loader from './Loader';
 import Input from './Input';
 import Button from './Button';
@@ -8,12 +10,12 @@ import Button from './Button';
 export default function Form({ navigation }) {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState({
-    naam: '',
+    name: '',
     email: '',
-    telefoonnummer: '',
-    bedrijfsnaam: '',
-    functie: '',
-    verwijzing: ''
+    phoneNumber: '',
+    company: '',
+    role: '',
+    refference: ''
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -42,25 +44,59 @@ export default function Form({ navigation }) {
       isValid = false;
     }
 
-    if (!inputs.naam) {
-      handleError('Vul aub een geldige naam in', 'naam');
+    if (!inputs.name) {
+      handleError('Vul aub een geldige naam in', 'name');
       isValid = false;
     }
 
-    if (!inputs.telefoonnummer) {
-      handleError('Vul aub een geldig telefoonnummer in', 'telefoonnummer');
+    if (!inputs.phoneNumber) {
+      handleError('Vul aub een geldig telefoonnummer in', 'phoneNumber');
       isValid = false;
     }
 
-    if (isValid) register();
+    if (isValid) {
+      name = inputs.name;
+      email = inputs.email;
+      phoneNumber = inputs.phoneNumber;
+      company = inputs.company;
+      role = inputs.role;
+      refference = inputs.refference;
+
+      register(name, email, phoneNumber, company, role, refference);
+    }
   };
 
-  const register = () => {
+  const register = async (
+    name,
+    email,
+    phoneNumber,
+    company,
+    role,
+    refference
+  ) => {
     setLoading(true);
-    setTimeout(() => {
-      navigation.navigate('Succes');
+    try {
+      const response = await client.post('/api/v1/form', {
+        name,
+        email,
+        phoneNumber,
+        company,
+        role,
+        refference
+      });
+
+      if (response.status === 'succes') {
+        navigation.navigate('Succes');
+      }
+
+      // TODO check nog een keer voor succes anders error weergeven boven aan het formulier
+
       setLoading(false);
-    }, 1000);
+    } catch (e) {
+      // TODO Get the right error message, we only get a 500 error atm.
+      // console.log(e.message);
+      setLoading(false);
+    }
   };
 
   return (
@@ -73,30 +109,18 @@ export default function Form({ navigation }) {
           <Text style={styles.form__bigText_span}> TechNight</Text>!
         </Text>
 
-        {/* <View style={styles.form__row}>
-        <TextInput
-          style={styles.form__input_half}
-          placeholder="Voornaam"
-          onChangeText={(text) => handleOnChange(text, 'voornaam')}
-        />
-        <TextInput
-          style={styles.form__input_half}
-          placeholder="Achternaam"
-          onChangeText={(text) => handleOnChange(text, 'achternaam')}
-        />
-      </View> */}
-
         <Input
           placeholder="Volledige naam"
-          error={errors.naam}
+          error={errors.name}
           onFocus={() => {
-            handleError(null, 'naam');
+            handleError(null, 'name');
           }}
-          onChangeText={(text) => handleOnChange(text, 'naam')}
+          onChangeText={(text) => handleOnChange(text, 'name')}
         />
 
         <Input
           placeholder="Email"
+          value={inputs.email}
           keyboardType="email-address"
           error={errors.email}
           onFocus={() => {
@@ -108,26 +132,26 @@ export default function Form({ navigation }) {
         <Input
           placeholder="Telefoonnummer"
           keyboardType="numeric"
-          error={errors.telefoonnummer}
+          error={errors.phoneNumber}
           onFocus={() => {
-            handleError(null, 'telefoonnummer');
+            handleError(null, 'phoneNumber');
           }}
-          onChangeText={(text) => handleOnChange(text, 'telefoonnummer')}
+          onChangeText={(text) => handleOnChange(text, 'phoneNumber')}
         />
 
         <Input
           placeholder="Bedrijfsnaam"
-          onChangeText={(text) => handleOnChange(text, 'bedrijfsnaam')}
+          onChangeText={(text) => handleOnChange(text, 'company')}
         />
 
         <Input
           placeholder="Functie"
-          onChangeText={(text) => handleOnChange(text, 'functie')}
+          onChangeText={(text) => handleOnChange(text, 'role')}
         />
 
         <Input
           placeholder="Hoe heeft u van ons gehoord?"
-          onChangeText={(text) => handleOnChange(text, 'verwijzing')}
+          onChangeText={(text) => handleOnChange(text, 'refference')}
         />
 
         <CheckBox
