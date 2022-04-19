@@ -80,6 +80,7 @@ export default function Footer() {
 
 const styles = StyleSheet.create({
   footer__container: {
+    height: '10%',
     marginLeft: 35
   },
   footer__header: {
@@ -108,7 +109,7 @@ const styles = StyleSheet.create({
   },
   footer__circle: {
     position: 'absolute',
-    bottom: '-30%',
+    bottom: '-150%',
     right: '-5%',
     borderRadius: 500
   }

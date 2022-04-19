@@ -171,6 +171,8 @@ export default function Form({ navigation }) {
 
 const styles = StyleSheet.create({
   form__container: {
+    height: '75%',
+    overflow: 'visible',
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: '30%',
