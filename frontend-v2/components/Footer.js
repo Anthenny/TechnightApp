@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
+import COLORS from '../const/colors';
 
 export default function Footer() {
   return (
@@ -85,7 +86,7 @@ const styles = StyleSheet.create({
   footer__header: {
     fontSize: 28,
     fontWeight: '300',
-    color: '#C0345F',
+    color: COLORS.red,
     marginBottom: 10
   },
   footer__row: {

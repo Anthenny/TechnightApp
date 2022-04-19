@@ -1,5 +1,6 @@
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import React from 'react';
+import COLORS from '../const/colors';
 
 export default function Button({ title, onPress = () => {} }) {
   return (
@@ -16,7 +17,7 @@ export default function Button({ title, onPress = () => {} }) {
 const styles = StyleSheet.create({
   form__button: {
     width: '100%',
-    backgroundColor: '#FF9200',
+    backgroundColor: COLORS.orange,
     borderRadius: 6,
     padding: 10,
     alignItems: 'center',
@@ -25,6 +26,6 @@ const styles = StyleSheet.create({
   },
   form__buttonText: {
     fontSize: 18,
-    color: '#fff'
+    color: COLORS.white
   }
 });

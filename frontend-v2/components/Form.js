@@ -6,6 +6,7 @@ import Input from './Input';
 import Button from './Button';
 import { registerRootComponent } from 'expo';
 import { NavigationRouteContext } from '@react-navigation/native';
+import COLORS from '../const/colors';
 
 export default function Form() {
   const [isChecked, setIsChecked] = useState(false);
@@ -163,7 +164,7 @@ const styles = StyleSheet.create({
     marginBottom: 20
   },
   form__bigText_span: {
-    color: '#C0345F'
+    color: COLORS.red
   },
   form__row: {
     flexDirection: 'row',
