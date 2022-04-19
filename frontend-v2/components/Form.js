@@ -38,10 +38,10 @@ export default function Form() {
     let isValid = true;
 
     if (!inputs.email) {
-      handleError('Vul aub een email adress in', 'email');
+      handleError('Vul aub een e-mail adres in', 'email');
       isValid = false;
     } else if (!inputs.email.match(/\S+@\S+\.\S+/)) {
-      handleError('Vul aub een geldig email adress in', 'email');
+      handleError('Vul aub een geldig e-mail adres in', 'email');
       isValid = false;
     }
 
@@ -55,7 +55,9 @@ export default function Form() {
       isValid = false;
     }
 
-    if (isValid) register();
+    if (isValid) {
+      register();
+    }
   };
 
   const register = () => {
@@ -75,19 +77,6 @@ export default function Form() {
           Schrijf je nu in voor de
           <Text style={styles.form__bigText_span}> TechNight</Text>!
         </Text>
-
-        {/* <View style={styles.form__row}>
-        <TextInput
-          style={styles.form__input_half}
-          placeholder="Voornaam"
-          onChangeText={(text) => handleOnChange(text, 'voornaam')}
-        />
-        <TextInput
-          style={styles.form__input_half}
-          placeholder="Achternaam"
-          onChangeText={(text) => handleOnChange(text, 'achternaam')}
-        />
-      </View> */}
 
         <Input
           placeholder="Volledige naam"
@@ -142,7 +131,7 @@ export default function Form() {
           onPress={checkboxHandler}
         />
 
-        <Button title={'ik meld me aan'} onPress={validate} />
+        <Button title={'Ik meld me aan'} onPress={validate} />
       </View>
     </>
   );
