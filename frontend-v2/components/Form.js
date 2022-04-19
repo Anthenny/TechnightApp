@@ -4,10 +4,8 @@ import { CheckBox } from 'react-native-elements';
 import Loader from './Loader';
 import Input from './Input';
 import Button from './Button';
-import { registerRootComponent } from 'expo';
-import { NavigationRouteContext } from '@react-navigation/native';
 
-export default function Form() {
+export default function Form({ navigation }) {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState({
     naam: '',
@@ -60,9 +58,9 @@ export default function Form() {
   const register = () => {
     setLoading(true);
     setTimeout(() => {
-      navigation;
+      navigation.navigate('Succes');
       setLoading(false);
-    }, 2000);
+    }, 1000);
   };
 
   return (
