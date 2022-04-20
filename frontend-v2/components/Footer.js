@@ -5,7 +5,7 @@ import COLORS from '../const/colors';
 export default function Footer() {
   return (
     <View style={styles.footer__container}>
-      <Text style={styles.footer__header}>Developers.nl</Text>
+      <Text style={styles.footer__header}>{developerInfo.companyName}</Text>
 
       <View style={styles.footer__row}>
         <View style={styles.footer__row__item}>
@@ -13,7 +13,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/location_logo.png')}
           />
-          <Text style={styles.footer__text}>Stadionweg 57c</Text>
+          <Text style={styles.footer__text}>{developerInfo.address}</Text>
         </View>
 
         <View style={styles.footer__row__item}>
@@ -21,7 +21,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/scale_logo.png')}
           />
-          <Text style={styles.footer__text}>57560188</Text>
+          <Text style={styles.footer__text}>{developerInfo.kvkNumber}</Text>
         </View>
       </View>
 
@@ -31,7 +31,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/postcode_logo.png')}
           />
-          <Text style={styles.footer__text}>3077 AS, Rotterdam</Text>
+          <Text style={styles.footer__text}>{developerInfo.postalCode}</Text>
         </View>
 
         <View style={styles.footer__row__item}>
@@ -39,7 +39,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/toolbox_logo.png')}
           />
-          <Text style={styles.footer__text}>NL8526.32.824 B 01</Text>
+          <Text style={styles.footer__text}>{developerInfo.bankOne}</Text>
         </View>
       </View>
 
@@ -49,7 +49,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/phone_logo.png')}
           />
-          <Text style={styles.footer__text}>010 - 3035929</Text>
+          <Text style={styles.footer__text}>{developerInfo.phoneNumber}</Text>
         </View>
 
         <View style={styles.footer__row__item}>
@@ -57,7 +57,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/euro_logo.png')}
           />
-          <Text style={styles.footer__text}>NL59 RABO 0107 3450 13</Text>
+          <Text style={styles.footer__text}>{developerInfo.bankTwo}</Text>
         </View>
       </View>
 
@@ -67,7 +67,7 @@ export default function Footer() {
             style={styles.footer__image}
             source={require('../assets/mail_logo.png')}
           />
-          <Text style={styles.footer__text}>info@developers.nl</Text>
+          <Text style={styles.footer__text}>{developerInfo.email}</Text>
         </View>
       </View>
 

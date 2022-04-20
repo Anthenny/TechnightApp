@@ -80,6 +80,7 @@ export default function Form() {
 
         <Input
           placeholder="Volledige naam"
+          keyboardType="phone-pad"
           error={errors.naam}
           onFocus={() => {
             handleError(null, 'naam');
@@ -89,7 +90,7 @@ export default function Form() {
 
         <Input
           placeholder="Email"
-          keyboardType="email-address"
+          keyboardType="phone-pad"
           error={errors.email}
           onFocus={() => {
             handleError(null, 'email');
@@ -109,16 +110,19 @@ export default function Form() {
 
         <Input
           placeholder="Bedrijfsnaam"
+          keyboardType="phone-pad"
           onChangeText={(text) => handleOnChange(text, 'bedrijfsnaam')}
         />
 
         <Input
           placeholder="Functie"
+          keyboardType="phone-pad"
           onChangeText={(text) => handleOnChange(text, 'functie')}
         />
 
         <Input
           placeholder="Hoe heeft u van ons gehoord?"
+          keyboardType="phone-pad"
           onChangeText={(text) => handleOnChange(text, 'verwijzing')}
         />
 
