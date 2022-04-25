@@ -12,6 +12,7 @@
 # General
 
 This project is created using React Native on the frontend and Node.js on the backend.
+This App is partly written in Javascript, if we have the time we are supposed to convert the application to Typescript.
 
 # Requirements ☕
 - Docker
