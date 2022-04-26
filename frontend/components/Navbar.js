@@ -1,7 +1,7 @@
 import { View, Image, StyleSheet } from 'react-native';
 import React from 'react';
 
-const Statusbar = () => {
+const Navbar = () => {
   return (
     <View>
       <Image
@@ -19,4 +19,4 @@ const styles = StyleSheet.create({
     marginBottom: 50
   }
 });
-export default Statusbar;
+export default Navbar;

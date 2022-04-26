@@ -1,6 +1,8 @@
 import { View, Text, StyleSheet, Keyboard } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { CheckBox } from 'react-native-elements';
+
+import client from '../api/client';
 import Loader from './Loader';
 import Input from './Input';
 import Button from './Button';
@@ -8,15 +10,15 @@ import { registerRootComponent } from 'expo';
 import { NavigationRouteContext } from '@react-navigation/native';
 import COLORS from '../const/colors';
 
-export default function Form() {
+export default function Form({ navigation }) {
   const [isChecked, setIsChecked] = useState(false);
   const [inputs, setInputs] = useState({
-    naam: '',
+    name: '',
     email: '',
-    telefoonnummer: '',
-    bedrijfsnaam: '',
-    functie: '',
-    verwijzing: ''
+    phoneNumber: '',
+    company: '',
+    role: '',
+    refference: ''
   });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
@@ -45,27 +47,71 @@ export default function Form() {
       isValid = false;
     }
 
-    if (!inputs.naam) {
-      handleError('Vul aub een geldige naam in', 'naam');
+    if (!inputs.name) {
+      handleError('Vul aub een geldige naam in', 'name');
       isValid = false;
     }
 
-    if (!inputs.telefoonnummer) {
-      handleError('Vul aub een geldig telefoonnummer in', 'telefoonnummer');
+    if (!inputs.phoneNumber) {
+      handleError('Vul aub een geldig telefoonnummer in', 'phoneNumber');
       isValid = false;
     }
 
     if (isValid) {
-      register();
+      const name = inputs.name;
+      const email = inputs.email;
+      const phoneNumber = inputs.phoneNumber;
+      const company = inputs.company;
+      const role = inputs.role;
+      const refference = inputs.refference;
+
+      setInputs({
+        name: '',
+        email: '',
+        phoneNumber: '',
+        company: '',
+        role: '',
+        refference: ''
+      });
+
+      register(name, email, phoneNumber, company, role, refference);
     }
   };
 
-  const register = () => {
+  const register = async (
+    name,
+    email,
+    phoneNumber,
+    company,
+    role,
+    refference
+  ) => {
     setLoading(true);
-    setTimeout(() => {
-      navigation;
+    try {
+      const response = await client.post('/api/v1/form', {
+        name,
+        email,
+        phoneNumber,
+        company,
+        role,
+        refference
+      });
+
+      if (response.data.status === 'succes') {
+        navigation.navigate('Succes');
+        console.log(response.data);
+      } else {
+        console.log(response.data.message);
+        // TODO check nog een keer voor succes anders error weergeven boven aan het formulier
+      }
+
       setLoading(false);
-    }, 2000);
+    } catch (e) {
+      // TODO Get the right error message, we only get a 500 error atm.
+      console.log(e);
+      console.log(response.data);
+      setLoading(false);
+    }
   };
 
   return (
@@ -80,17 +126,19 @@ export default function Form() {
 
         <Input
           placeholder="Volledige naam"
+          value={inputs.name}
+          error={errors.name}
           keyboardType="phone-pad"
-          error={errors.naam}
           onFocus={() => {
-            handleError(null, 'naam');
+            handleError(null, 'name');
           }}
-          onChangeText={(text) => handleOnChange(text, 'naam')}
+          onChangeText={(text) => handleOnChange(text, 'name')}
         />
 
         <Input
           placeholder="Email"
           keyboardType="phone-pad"
+          value={inputs.email}
           error={errors.email}
           onFocus={() => {
             handleError(null, 'email');
@@ -101,29 +149,33 @@ export default function Form() {
         <Input
           placeholder="Telefoonnummer"
           keyboardType="numeric"
-          error={errors.telefoonnummer}
+          value={inputs.phoneNumber}
+          error={errors.phoneNumber}
           onFocus={() => {
-            handleError(null, 'telefoonnummer');
+            handleError(null, 'phoneNumber');
           }}
-          onChangeText={(text) => handleOnChange(text, 'telefoonnummer')}
+          onChangeText={(text) => handleOnChange(text, 'phoneNumber')}
         />
 
         <Input
           placeholder="Bedrijfsnaam"
           keyboardType="phone-pad"
-          onChangeText={(text) => handleOnChange(text, 'bedrijfsnaam')}
+          value={inputs.company}
+          onChangeText={(text) => handleOnChange(text, 'company')}
         />
 
         <Input
           placeholder="Functie"
           keyboardType="phone-pad"
-          onChangeText={(text) => handleOnChange(text, 'functie')}
+          value={inputs.role}
+          onChangeText={(text) => handleOnChange(text, 'role')}
         />
 
         <Input
           placeholder="Hoe heeft u van ons gehoord?"
           keyboardType="phone-pad"
-          onChangeText={(text) => handleOnChange(text, 'verwijzing')}
+          value={inputs.refference}
+          onChangeText={(text) => handleOnChange(text, 'refference')}
         />
 
         <CheckBox

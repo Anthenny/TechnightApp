@@ -6,8 +6,7 @@ const catchAsync = require('../utils/catchAsync');
 exports.createForm = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const {
-      firstName,
-      lastName,
+      name,
       email,
       phoneNumber,
       company,
@@ -16,8 +15,7 @@ exports.createForm = catchAsync(
     } = req.body;
 
     const formInput = await FormModel.create({
-      firstName,
-      lastName,
+      name,
       email,
       phoneNumber: +phoneNumber,
       company,
