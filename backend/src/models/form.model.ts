@@ -8,6 +8,7 @@ export interface FormDocument extends mongoose.Document {
   company: string;
   role: string;
   refference: string;
+  checkbox: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -40,6 +41,9 @@ const formSchema = new mongoose.Schema(
     refference: {
       type: String,
       default: 'undefined'
+    },
+    checkbox: {
+      type: Boolean,
     }
   },
   {

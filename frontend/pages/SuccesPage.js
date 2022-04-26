@@ -40,7 +40,6 @@ const styles = StyleSheet.create({
     marginLeft: '20%',
     marginRight: '20%',
     alignItems: 'center'
-    // marginTop: '20%'
   },
   succes__container_header: {
     fontSize: 30,
@@ -66,6 +65,6 @@ const styles = StyleSheet.create({
   succes__container_end: {
     fontSize: 22,
     justifyContent: 'center',
-    fontWeight: '200'
+    fontWeight: '300'
   }
 });
