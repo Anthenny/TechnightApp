@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Image } from 'react-native';
 import React from 'react';
 import COLORS from '../const/colors';
+import developerInfo from '../const/developer';
 
 export default function Footer() {
   return (

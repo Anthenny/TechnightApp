@@ -1,13 +1,11 @@
 import { View, Text, StyleSheet, Keyboard } from 'react-native';
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 
 import client from '../api/client';
 import Loader from './Loader';
 import Input from './Input';
 import Button from './Button';
-import { registerRootComponent } from 'expo';
-import { NavigationRouteContext } from '@react-navigation/native';
 import COLORS from '../const/colors';
 
 export default function Form({ navigation }) {
@@ -98,8 +96,10 @@ export default function Form({ navigation }) {
       });
 
       if (response.data.status === 'succes') {
-        navigation.navigate('Succes');
-        console.log(response.data);
+        navigation.navigate('Succes', {
+          name,
+          email
+        });
       } else {
         console.log(response.data.message);
         // TODO check nog een keer voor succes anders error weergeven boven aan het formulier

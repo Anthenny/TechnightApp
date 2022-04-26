@@ -8,3 +8,5 @@ const developerInfo = {
   bankOne: 'NL8526.32.824 B 01',
   bankTwo: 'NL59 RABO 0107 3450 13'
 };
+
+export default developerInfo;
