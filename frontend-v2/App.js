@@ -1,14 +1,20 @@
-import { SafeAreaView } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { Statusbar, Footer, Form } from './components';
+import FormPage from './pages/FormPage';
+import SuccesPage from './pages/SuccesPage';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView>
-      <Statusbar />
-      <Form />
-      <Footer />
-    </SafeAreaView>
-
+    <>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Form">
+          <Stack.Screen name="Form" component={FormPage} />
+          <Stack.Screen name="Succes" component={SuccesPage} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 }

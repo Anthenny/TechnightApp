@@ -2,13 +2,9 @@ import { object, string } from 'zod';
 
 export const createFormSchema = object({
   body: object({
-    firstName: string({
-      required_error: 'Firstname is required',
-      invalid_type_error: 'Firstname must be a string'
-    }),
-    lastName: string({
-      required_error: 'Lastname is required',
-      invalid_type_error: 'Lastname must be a string'
+    name: string({
+      required_error: 'name is required',
+      invalid_type_error: 'name must be a string'
     }),
     email: string({
       required_error: 'Email is required',

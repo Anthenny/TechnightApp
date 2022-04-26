@@ -26,8 +26,7 @@ Only the API is functioning at this point in time!
 
 ## First time running the application
 
-1. Run make build inside of the backend-v2 directory.
-Cd in the backend-v2 directory and use `make build`. This will build the application getting everything u need to use this API. After its done getting the dependencies it will spin up the containers.
+1. Cd in the backend-v2 directory and use `make build`. This will build the application getting everything u need to use this API. When it's done getting the dependencies it will spin up the containers.
 2. After building and spinning up the containers go to http://localhost:5000/ , please give the containers the time to startup.
 
 ## Errors
