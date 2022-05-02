@@ -1,0 +1,11 @@
+image: node:16
+
+pipelines:
+  branches:
+    main:
+      - step:
+          caches:
+            - node
+          script:
+            - npm install --save-dev --save-exact prettier
+            - npx prettier --check
