@@ -11,7 +11,8 @@ exports.createForm = catchAsync(
       phoneNumber,
       company,
       role,
-      refference
+      refference,
+      checkbox
     } = req.body;
 
     const formInput = await FormModel.create({
@@ -20,7 +21,8 @@ exports.createForm = catchAsync(
       phoneNumber: +phoneNumber,
       company,
       role,
-      refference
+      refference,
+      checkbox
     });
 
     return res.status(200).json({

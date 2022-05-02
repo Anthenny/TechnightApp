@@ -62,6 +62,7 @@ export default function Form({ navigation }) {
       const company = inputs.company;
       const role = inputs.role;
       const refference = inputs.refference;
+      const checkbox = isChecked;
 
       setInputs({
         name: '',
@@ -72,7 +73,9 @@ export default function Form({ navigation }) {
         refference: ''
       });
 
-      register(name, email, phoneNumber, company, role, refference);
+      setIsChecked(false);
+
+      register(name, email, phoneNumber, company, role, refference, checkbox);
     }
   };
 
@@ -82,7 +85,8 @@ export default function Form({ navigation }) {
     phoneNumber,
     company,
     role,
-    refference
+    refference,
+    checkbox
   ) => {
     setLoading(true);
     try {
@@ -92,10 +96,12 @@ export default function Form({ navigation }) {
         phoneNumber,
         company,
         role,
-        refference
+        refference,
+        checkbox
       });
 
       if (response.data.status === 'succes') {
+        console.log(response.data);
         navigation.navigate('Succes', {
           name,
           email
