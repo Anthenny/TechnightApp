@@ -1,11 +1,11 @@
 FROM node
 
-WORKDIR /app
+WORKDIR /frontend-app
 
 COPY package.json .
 
 RUN npm install
 
-COPY . .
+COPY . ./
 
-CMD ["exp", "start"]
+CMD ["npm", "start", "ios"]
