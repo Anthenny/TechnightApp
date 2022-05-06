@@ -2,12 +2,12 @@ FROM node:15
 
 WORKDIR /app
 
-COPY package.json .
+COPY package.json /app
 
 RUN npm install
 
-COPY . ./
+COPY . /app
 
 EXPOSE 5000
 
-CMD ["node", "server.ts"];
+CMD ["node", "run"];
