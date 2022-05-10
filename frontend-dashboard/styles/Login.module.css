@@ -32,8 +32,6 @@
     display: flex;
     flex-direction: column;
     width: 35%;
-
-    /* Bij kleine schermen meer percentage */
 }
 
 .login__input_field {
@@ -69,7 +67,6 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: .5rem;
-
 }
 
 .line{
@@ -96,3 +93,17 @@
     background-image: url('/Login-technight.png')
 }
 
+
+@media only screen and (max-width: 1500px) {
+    .login__input {
+        width: 50%;
+    }
+    
+    .login__right{
+        width: 50%;
+        height: 100vh;
+        background-image: url('/Login-technight.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
