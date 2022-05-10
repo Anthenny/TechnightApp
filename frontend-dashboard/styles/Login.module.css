@@ -1,0 +1,109 @@
+.login__container{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+}
+
+.login__left{
+    /* moet naar percentages */
+    display: flex;
+    flex-direction: column;
+    padding-left: 10%;
+    padding-top: 5%; 
+    width: 50%;
+    height: 100vh;
+}
+
+.login__header {
+    font-size: 2rem;
+    font-weight: 300;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 0.8rem;
+    text-align: left;
+}
+
+.login__paragraph {
+    font-weight: 200;
+    font-size: 1.3rem;
+    margin-bottom: 3.5rem;
+}
+
+.login__input {
+    display: flex;
+    flex-direction: column;
+    width: 35%;
+}
+
+.login__input_field {
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1px solid rgba(0, 0, 0, .5);
+    padding: 1.2rem 1rem;
+    margin-bottom: 2.5rem;
+    color: #888585;
+}
+
+.login__input_button {
+    border-radius: 8px;
+    border: 0.5px solid #FC9A5E;
+    padding: 1rem 1rem;
+    text-align: center;
+    color: white;
+    background-color: #FC9A5E;
+    font-size: 1.5rem;
+    margin-bottom: 4%;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.login__input_button:hover{
+    color: #FC9A5E;
+    background: white;
+}
+
+.login__options {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.line{
+    height: 1px;
+    width: 40%;
+    background-color: black;
+}
+
+.text {
+    font-size: 1rem;
+    font-weight: 300;
+    color: black;
+}
+
+.login__forgot p {
+    font-weight: 300;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.login__right{
+    width: 50%;
+    height: 100vh;
+    background-image: url('/Login-technight.png')
+}
+
+
+@media only screen and (max-width: 1500px) {
+    .login__input {
+        width: 50%;
+    }
+    
+    .login__right{
+        width: 50%;
+        height: 100vh;
+        background-image: url('/Login-technight.png');
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
