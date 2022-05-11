@@ -1,0 +1,92 @@
+.modal__background{
+    display: block;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 2;
+    position: fixed;
+}
+
+.modal__box {
+    background-color: white;
+    width: 50%;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    padding: 10px 60px;
+}
+
+.box__header {
+    position: relative;
+}
+
+.box__close {
+    position: absolute;
+    top: -80%;
+    right: 3%;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+.box__header h1{    
+    font-weight: 300;
+    font-size: 1.8rem;
+    margin-bottom: 25px;
+      
+}
+
+.form__container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form__item{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.form__item p {
+    font-size: 1.3rem;
+    font-weight: 300;
+}
+
+.form__item input {
+    border: 0.5px solid blue;
+    padding: 10px 10px;
+    border-radius: 8px;
+    opacity: .8;
+    font-size: 1rem;
+}
+
+.form__item input:focus {
+    outline: 0.3px solid blue;
+}  
+
+.form__container button {
+    color: white;
+    font-size: 1rem;
+    text-align: center;
+    background-color: blue;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all ease 0.2s;
+    border: 1px solid blue;
+    width: 30%;
+    align-self: flex-end;
+    margin-bottom: 20px;
+}
+
+.form__container button:hover {
+    color: blue;
+    background-color: white;
+}
