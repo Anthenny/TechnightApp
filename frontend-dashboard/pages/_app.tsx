@@ -7,9 +7,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   // TODO vraag hulp hiermee ( ik defineer al de init waarde in authcontext)
   const [user, setUser] = useState({
-    gebruiker: undefined,
-    email: undefined,
-    telefoonnummer: undefined
+    name: undefined,
+    email: undefined
   });
 
   const fetchUser = () => {

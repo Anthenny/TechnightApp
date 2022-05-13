@@ -13,7 +13,7 @@ export const Navbar: NextPage = () => {
   return (
     <div className={styles.nav}>
       <div className={styles.navbar__container}>
-        <p>Welkom {user.gebruiker}</p>
+        <p>Welkom {user.name}</p>
         <div className={styles.image__container}>
           <Image src={logoImg} width={160} height={45} alt="logo" />
         </div>
