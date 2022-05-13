@@ -27,4 +27,4 @@ const sendEmail = catchAsync(async (options: any) => {
   });
 });
 
-module.exports = sendEmail;
+export default sendEmail;

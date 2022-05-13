@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 
-// Typescript definition
 export interface FormDocument extends mongoose.Document {
   name: string;
   email: string;
@@ -43,7 +42,7 @@ const formSchema = new mongoose.Schema(
       default: 'undefined'
     },
     checkbox: {
-      type: Boolean,
+      type: Boolean
     }
   },
   {

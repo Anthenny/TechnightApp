@@ -18,6 +18,18 @@ services:
     command: npm run dev
     depends_on:
       - mongo 
+  
+  frontend-dashboard:
+    container_name: frontend-dashboard
+    build: 
+      context: ../frontend-dashboard
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - 3000:3000
+    command: npm run dev
+    depends_on:
+      - mongo 
  
   mongo:
     image: mongo
@@ -41,6 +53,7 @@ services:
     depends_on:
       - mongo
    
+  # TODO docker start met expo
   # frontend-app:
   #   container_name: frontend-app
   #   build:

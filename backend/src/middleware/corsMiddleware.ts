@@ -1,22 +1,15 @@
 import { NextFunction, Request, Response } from 'express';
 
-export function corsMiddleware(
+export const corsMiddleware = function (
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  // Websites you want to allow to connect
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', '*');
 
-  // Request headers you want to allow
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 
-  // Request methods you want to allow
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-
-  // Go to next layer of middleware
-  next();
-}
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  if (req.method === 'OPTIONS') res.send(200);
+  else next();
+};
