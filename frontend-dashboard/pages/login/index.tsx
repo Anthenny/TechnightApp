@@ -2,8 +2,8 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { useUserContext } from '../../context/authContext';
 
+import { useUserContext } from '../../context/authContext';
 import styles from '../../styles/Login.module.css';
 
 interface Values {
@@ -27,7 +27,7 @@ const Login: NextPage = () => {
     password: null
   });
 
-  const { user, setUser } = useUserContext();
+  const { setUser } = useUserContext();
 
   const handleChange = (value: string, key: string) => {
     setValues((prevState) => ({ ...prevState, [key]: value }));
@@ -58,17 +58,37 @@ const Login: NextPage = () => {
     return isValid;
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!validateInput()) {
       return;
     }
 
-    const email = values.email;
+    const response = await fetch('http://localhost:5000/api/v1/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        email: values.email,
+        password: values.password
+      })
+    });
 
-    console.log('we sturen een req naar de api om u in te loggen');
-    setUser({ email });
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      handleError(responseData.message, 'email');
+
+      return console.log(responseData.message);
+    }
+
+    setUser({
+      email: responseData.admin.email,
+      name: responseData.admin.name
+    });
+
     return Router.push('/dashboard');
   };
   return (

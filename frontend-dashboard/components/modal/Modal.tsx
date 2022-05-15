@@ -60,15 +60,16 @@ const Modal: NextPage = () => {
                   onChange={(e) =>
                     handleChange(e.currentTarget.value, 'gebruiker')
                   }
-                  value={user.gebruiker}
+                  value={values.gebruiker}
                 />
               </div>
               <div className={styles.form__item}>
                 <p>Email</p>
                 <input
                   type="text"
+                  placeholder="Email"
                   onChange={(e) => handleChange(e.currentTarget.value, 'email')}
-                  value={user.email}
+                  value={values.email}
                 />
               </div>
               <div className={styles.form__item}>
@@ -78,7 +79,7 @@ const Modal: NextPage = () => {
                   onChange={(e) =>
                     handleChange(e.currentTarget.value, 'telefoonnummer')
                   }
-                  value={user.telefoonnummer}
+                  value={values.telefoonnummer}
                 />
               </div>
               <button type="submit">Submit</button>
