@@ -8,8 +8,6 @@ import styles from '../../styles/Navbar.module.css';
 export const Navbar: NextPage = () => {
   const { user } = useUserContext();
 
-  console.log(user);
-
   return (
     <div className={styles.nav}>
       <div className={styles.navbar__container}>

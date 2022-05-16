@@ -10,6 +10,6 @@ export const corsMiddleware = function (
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 
   res.header('Access-Control-Allow-Headers', 'Content-Type');
-  if (req.method === 'OPTIONS') res.send(200);
+  if (req.method === 'OPTIONS') res.sendStatus(200);
   else next();
 };

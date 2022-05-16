@@ -1,15 +1,33 @@
 import { Express, Request, Response } from 'express';
-import { createFormSchema } from '../schemas/form.schema';
 import validateResource from '../middleware/validateResource';
 
-const formController = require('../controllers/form.controller');
+import {
+  createForm,
+  deleteFormData,
+  getAllFormData,
+  getOneFormData,
+  updateFormData
+} from '../controllers/form.controller';
+import { createFormSchema } from '../schemas/form.schema';
+
+import {
+  loginAdmin,
+  protect,
+  signupAdmin
+} from '../controllers/admin.controller';
+import { createAdminSchema, loginAdminSchema } from '../schemas/admin.schema';
 
 function routes(app: Express) {
-  app.post(
-    '/api/v1/form',
-    validateResource(createFormSchema),
-    formController.createForm
-  );
+  // TODO routes beveiligen met behulp van jsonwebtoken
+  // app.get('/api/v1/form', protect, getAllFormData);
+  app.get('/api/v1/form', getAllFormData);
+  app.get('/api/v1/form/:id', getOneFormData);
+  app.patch('/api/v1/form/:id', updateFormData);
+  app.post('/api/v1/form', validateResource(createFormSchema), createForm);
+  app.delete('/api/v1/form/:id', deleteFormData);
+
+  app.post('/api/v1/login', loginAdmin);
+  app.post('/api/v1/signup', validateResource(createAdminSchema), signupAdmin);
 }
 
 export default routes;

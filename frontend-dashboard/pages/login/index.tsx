@@ -79,9 +79,7 @@ const Login: NextPage = () => {
     const responseData = await response.json();
 
     if (!response.ok) {
-      handleError(responseData.message, 'email');
-
-      return console.log(responseData.message);
+      return handleError(responseData.message, 'email');
     }
 
     setUser({

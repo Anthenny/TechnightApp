@@ -19,17 +19,19 @@ services:
     depends_on:
       - mongo 
   
-  frontend-dashboard:
-    container_name: frontend-dashboard
-    build: 
-      context: ../frontend-dashboard
-      dockerfile: Dockerfile
-    restart: always
-    ports:
-      - 3000:3000
-    command: npm run dev
-    depends_on:
-      - mongo 
+  # // Uitgecommend voor mijn examens
+  # TODO volumes fixen wanneer er een update is in de frontend wil ik dat de container ook update zodat deze veranderingen zichtbaar zijn
+  # frontend-dashboard:
+  #   container_name: frontend-dashboard
+  #   build: 
+  #     context: ../frontend-dashboard
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   ports:
+  #     - 3000:3000
+  #   command: npm run dev
+  #   depends_on:
+  #     - mongo 
  
   mongo:
     image: mongo

@@ -16,8 +16,7 @@ const formSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'This form requires a name'],
-      lowercase: true
+      required: [true, 'This form requires a name']
     },
     email: {
       type: String,
