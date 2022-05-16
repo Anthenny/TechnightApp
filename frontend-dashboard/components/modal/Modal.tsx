@@ -3,20 +3,23 @@ import React, { useState } from 'react';
 import { config } from '../../config/config';
 import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Modal.module.css';
+import { useValidate } from '../../utils/validation-hook';
 
 interface Values {
-  name: string;
+  fullName: string;
   email: string;
-  telefoonnummer: number | undefined;
+  phoneNumber: string;
 }
 
 const Modal: NextPage = () => {
   const { modal, setModal } = useModalContext();
   const [values, setValues] = useState<Values>({
-    name: '',
+    fullName: '',
     email: '',
-    telefoonnummer: undefined
+    phoneNumber: ''
   });
+
+  const { error, setError, validateInputModal, clearError } = useValidate();
 
   const modalHandler = () => {
     setModal(false);
@@ -28,6 +31,13 @@ const Modal: NextPage = () => {
 
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const fullName = values.fullName;
+    const email = values.email;
+    const phoneNumber = values.phoneNumber;
+
+    if (!validateInputModal(fullName, email, phoneNumber)) {
+      return;
+    }
 
     const response = await fetch(`${config.API_URL}/form`, {
       method: 'POST',
@@ -35,16 +45,16 @@ const Modal: NextPage = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        name: values.name,
-        email: values.email,
-        phoneNumber: values.telefoonnummer
+        name: fullName,
+        email,
+        phoneNumber
       })
     });
 
     const responseData = await response.json();
 
     if (!response.ok) {
-      return console.log(responseData.message, 'email');
+      return setError(responseData.message);
     }
 
     setModal(false);
@@ -63,13 +73,17 @@ const Modal: NextPage = () => {
             </div>
 
             <form className={styles.form__container} onSubmit={submitHandler}>
+              {error && <p>{error}</p>}
               <div className={styles.form__item}>
                 <p>Naam</p>
                 <input
                   type="text"
                   placeholder="Volledige naam"
-                  onChange={(e) => handleChange(e.currentTarget.value, 'name')}
-                  value={values.name}
+                  onChange={(e) =>
+                    handleChange(e.currentTarget.value, 'fullName')
+                  }
+                  onFocus={clearError}
+                  value={values.fullName}
                 />
               </div>
               <div className={styles.form__item}>
@@ -78,6 +92,7 @@ const Modal: NextPage = () => {
                   type="text"
                   placeholder="Email"
                   onChange={(e) => handleChange(e.currentTarget.value, 'email')}
+                  onFocus={clearError}
                   value={values.email}
                 />
               </div>
@@ -87,9 +102,10 @@ const Modal: NextPage = () => {
                   type="text"
                   placeholder="telefoonnummer"
                   onChange={(e) =>
-                    handleChange(e.currentTarget.value, 'telefoonnummer')
+                    handleChange(e.currentTarget.value, 'phoneNumber')
                   }
-                  value={values.telefoonnummer}
+                  onFocus={clearError}
+                  value={values.phoneNumber}
                 />
               </div>
               <button type="submit">Submit</button>

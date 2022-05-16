@@ -6,62 +6,34 @@ import { config } from '../config/config';
 
 import { useUserContext } from '../context/authContext';
 import styles from '../styles/Login.module.css';
+import { useValidate } from '../utils/validation-hook';
 
-interface Values {
+interface LoginInputValues {
   email: string;
   password: string;
 }
 
-interface Errors {
-  email: string | null;
-  password: string | null;
-}
-
 const Login: NextPage = () => {
-  const [values, setValues] = useState<Values>({
+  const [values, setValues] = useState<LoginInputValues>({
     email: '',
     password: ''
   });
 
-  const [errors, setErrors] = useState<Errors>({
-    email: null,
-    password: null
-  });
-
   const { setUser } = useUserContext();
+
+  const { error, setError, validateInputLogin, clearError } = useValidate();
 
   const handleChange = (value: string, key: string) => {
     setValues((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const handleError = (errorMessage: string | null, input: string) => {
-    setErrors((prevState) => ({ ...prevState, [input]: errorMessage }));
-  };
-
-  const validateInput = () => {
-    let isValid = true;
-    if (!values.email) {
-      handleError('Vul aub een e-mail adres in', 'email');
-      isValid = false;
-    }
-
-    if (!values.email.match(/\S+@\S+\.\S+/)) {
-      handleError('Vul aub een geldig e-mail adres in', 'email');
-      isValid = false;
-    }
-
-    if (!values.password) {
-      handleError('Vul aub een wachtwoord in', 'password');
-      isValid = false;
-    }
-
-    return isValid;
-  };
-
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!validateInput()) {
+    const email = values.email;
+    const password = values.password;
+
+    if (!validateInputLogin(email, password)) {
       return;
     }
 
@@ -79,7 +51,7 @@ const Login: NextPage = () => {
     const responseData = await response.json();
 
     if (!response.ok) {
-      return handleError(responseData.message, 'email');
+      return setError(responseData.message);
     }
 
     setUser({
@@ -104,27 +76,20 @@ const Login: NextPage = () => {
           </div>
 
           <form className={styles.login__input} onSubmit={submitHandler}>
-            {errors.email && <p>{errors.email}</p>}
+            {error && <p>{error}</p>}
             <input
               className={styles.login__input_field}
               onChange={(e) => handleChange(e.currentTarget.value, 'email')}
-              onFocus={() => {
-                handleError(null, 'email');
-              }}
+              onFocus={clearError}
               value={values.email}
               name="email"
               type="email"
               placeholder="Email"
             />
-
-            {errors.password && <p>{errors.password}</p>}
-
             <input
               className={styles.login__input_field}
               onChange={(e) => handleChange(e.currentTarget.value, 'password')}
-              onFocus={() => {
-                handleError(null, 'password');
-              }}
+              onFocus={clearError}
               value={values.password}
               name="password"
               type="password"

@@ -8,8 +8,7 @@ import { config } from '../../config/config';
 type SortKeys = 'gebruiker' | 'email' | 'telefoonnummer' | 'actie';
 
 export const Table: NextPage = (props) => {
-  const [data, setData] = useState<any[]>([]);
-  // TODO error boven aan de tabel
+  const [data, setData] = useState<any>([]);
   const [error, setError] = useState<String | null>();
   const { setModal } = useModalContext();
 
@@ -20,6 +19,7 @@ export const Table: NextPage = (props) => {
     { key: 'actie', label: 'Actie' }
   ];
 
+  // TODO fetchdata & useEffect verbeteren.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
     const response = await fetch(`${config.API_URL}/form`, {
@@ -43,7 +43,7 @@ export const Table: NextPage = (props) => {
         method: 'DELETE'
       });
     } catch (err: any) {
-      console.log(err);
+      setError(err.message);
     }
   };
 
@@ -58,6 +58,7 @@ export const Table: NextPage = (props) => {
         Mensen die zich hebben ingeschreven voor de TechNight!
       </h4>
       <div className={styles.table__container}>
+        {error && <p>{error}</p>}
         <table>
           <thead>
             <tr>
@@ -67,7 +68,7 @@ export const Table: NextPage = (props) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((participant) => {
+            {data.map((participant: any) => {
               return (
                 <tr key={participant._id}>
                   <td>{participant.name}</td>
