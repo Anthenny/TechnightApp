@@ -1,21 +1,19 @@
 import { NextPage } from 'next';
 import React, { useState } from 'react';
-import { useUserContext } from '../../context/authContext';
+import { config } from '../../config/config';
 import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Modal.module.css';
 
 interface Values {
-  gebruiker: string;
+  name: string;
   email: string;
   telefoonnummer: number | undefined;
 }
 
 const Modal: NextPage = () => {
   const { modal, setModal } = useModalContext();
-  const { user, setUser, editUser } = useUserContext();
-
   const [values, setValues] = useState<Values>({
-    gebruiker: '',
+    name: '',
     email: '',
     telefoonnummer: undefined
   });
@@ -28,16 +26,28 @@ const Modal: NextPage = () => {
     setValues((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // check inputs met validate functie
-    // const gebruiker = values.gebruiker;
-    // const email = values.email;
-    // const telefoonnummer = values.telefoonnummer;
 
-    // setUser({ gebruiker, email, telefoonnummer });
-    // setModal(false);
-    console.log('er is een nieuwe user aangemaakt');
+    const response = await fetch(`${config.API_URL}/form`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: values.name,
+        email: values.email,
+        phoneNumber: values.telefoonnummer
+      })
+    });
+
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      return console.log(responseData.message, 'email');
+    }
+
+    setModal(false);
   };
 
   return (
@@ -54,13 +64,12 @@ const Modal: NextPage = () => {
 
             <form className={styles.form__container} onSubmit={submitHandler}>
               <div className={styles.form__item}>
-                <p>Gebruiker</p>
+                <p>Naam</p>
                 <input
                   type="text"
-                  onChange={(e) =>
-                    handleChange(e.currentTarget.value, 'gebruiker')
-                  }
-                  value={values.gebruiker}
+                  placeholder="Volledige naam"
+                  onChange={(e) => handleChange(e.currentTarget.value, 'name')}
+                  value={values.name}
                 />
               </div>
               <div className={styles.form__item}>
@@ -76,6 +85,7 @@ const Modal: NextPage = () => {
                 <p>Telefoonnummer</p>
                 <input
                   type="text"
+                  placeholder="telefoonnummer"
                   onChange={(e) =>
                     handleChange(e.currentTarget.value, 'telefoonnummer')
                   }

@@ -1,16 +1,15 @@
 import type { NextPage } from 'next';
 import { useEffect, useState } from 'react';
-import { useModalContext } from '../../context/modalContext';
 
+import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Table.module.css';
+import { config } from '../../config/config';
 
 type SortKeys = 'gebruiker' | 'email' | 'telefoonnummer' | 'actie';
 
-type ParticipantKeys = any;
-
-export const Table: NextPage = () => {
-  const [data, setData] = useState<ParticipantKeys[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(false);
+export const Table: NextPage = (props) => {
+  const [data, setData] = useState<any[]>([]);
+  // TODO error boven aan de tabel
   const [error, setError] = useState<String | null>();
   const { setModal } = useModalContext();
 
@@ -21,37 +20,34 @@ export const Table: NextPage = () => {
     { key: 'actie', label: 'Actie' }
   ];
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchData = async () => {
+    const response = await fetch(`${config.API_URL}/form`, {
+      method: 'GET'
+    });
+
+    const responseData = await response.json();
+    if (!response.ok) return setError(responseData.message);
+
+    setData(responseData.data.formData);
+  };
+
   useEffect(() => {
-    const sendRequest = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch('http://localhost:5000/api/v1/form', {
-          method: 'GET'
-        });
-
-        const responseData = await response.json();
-        if (!response.ok) return setError(responseData.message);
-
-        setData(responseData.data.formData);
-      } catch (err: any) {}
-      setIsLoading(false);
-    };
-    sendRequest();
-  }, []);
+    fetchData();
+    if (fetchData.length) fetchData();
+  }, [fetchData]);
 
   const deleteHandler = async (id: number) => {
-    setIsLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/api/v1/form/${id}`, {
+      await fetch(`${config.API_URL}/form/${id}`, {
         method: 'DELETE'
       });
     } catch (err: any) {
-      setIsLoading(false);
+      console.log(err);
     }
   };
 
   const editHandler = (id: number) => {
-    // stuur patch request naar api
     setModal(true);
     return console.log(`Edited user with an id of: ${id}`);
   };
