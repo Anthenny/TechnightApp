@@ -6,11 +6,13 @@ import styles from '../../styles/Table.module.css';
 
 type SortKeys = 'gebruiker' | 'email' | 'telefoonnummer' | 'actie';
 
+type ParticipantKeys = any;
+
 export const Table: NextPage = () => {
-  const [data, setData] = useState<Array<string | number>>([]);
+  const [data, setData] = useState<ParticipantKeys[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(false);
-  const [errror, setError] = useState<String | null>();
-  const { modal, setModal } = useModalContext();
+  const [error, setError] = useState<String | null>();
+  const { setModal } = useModalContext();
 
   const headers: { key: SortKeys; label: string }[] = [
     { key: 'gebruiker', label: 'Gebruiker' },
@@ -19,27 +21,33 @@ export const Table: NextPage = () => {
     { key: 'actie', label: 'Actie' }
   ];
 
-  // useEffect(() => {
-  //   // async functie die data ophaalt van api
-  //   const sendRequest = async () => {
-  //     // setIsLoading(true);
-  //     // try{
-  //     //   const response =
-  //     // }
-  //     // const responseData = await response.json();
-  //     // if(!response.ok) return setError(responseData.message);
-  //     // setData()
-  //     // catch(err: any) {
-  //     // }
-  //     // setIsLoading(false)
-  //   };
+  useEffect(() => {
+    const sendRequest = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('http://localhost:5000/api/v1/form', {
+          method: 'GET'
+        });
 
-  //   sendRequest()
-  // }, [data]);
+        const responseData = await response.json();
+        if (!response.ok) return setError(responseData.message);
 
-  const deleteHandler = (id: number) => {
-    // stuur delete request naar api
-    return console.log(`Deleted user with an id of: ${id}`);
+        setData(responseData.data.formData);
+      } catch (err: any) {}
+      setIsLoading(false);
+    };
+    sendRequest();
+  }, []);
+
+  const deleteHandler = async (id: number) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch(`http://localhost:5000/api/v1/form/${id}`, {
+        method: 'DELETE'
+      });
+    } catch (err: any) {
+      setIsLoading(false);
+    }
   };
 
   const editHandler = (id: number) => {
@@ -63,151 +71,29 @@ export const Table: NextPage = () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>0636082244</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                  onClick={() => editHandler(1)}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                  onClick={() => deleteHandler(1)}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-
-            <tr>
-              <td>Anthenny de Hoon</td>
-              <td>anthenny1997@hotmail.com</td>
-              <td>Telefoonnummer</td>
-              <td className={styles.table__buttons}>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_edit}`}
-                >
-                  Edit
-                </button>
-                <button
-                  className={`${styles.table__button} ${styles.table__button_delete}`}
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
+            {data.map((participant) => {
+              return (
+                <tr key={participant._id}>
+                  <td>{participant.name}</td>
+                  <td>{participant.email}</td>
+                  <td>{participant.phoneNumber}</td>
+                  <td className={styles.table__buttons}>
+                    <button
+                      className={`${styles.table__button} ${styles.table__button_edit}`}
+                      onClick={() => editHandler(participant._id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className={`${styles.table__button} ${styles.table__button_delete}`}
+                      onClick={() => deleteHandler(participant._id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
