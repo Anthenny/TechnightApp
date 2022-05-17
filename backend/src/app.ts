@@ -7,14 +7,14 @@ import { corsMiddleware } from './middleware/corsMiddleware';
 
 const app = express();
 
-const limiter = rateLimit({
-  windowMs: 10 * 60 * 1000, // 10 minutes
-  max: 200, // Limit each IP to 100 request
-  standardHeaders: true,
-  legacyHeaders: false // Disable the 'X-RateLimit-*' headers
-});
+// const limiter = rateLimit({
+//   windowMs: 10 * 60 * 1000, // 10 minutes
+//   max: 200, // Limit each IP to 100 request
+//   standardHeaders: true,
+//   legacyHeaders: false // Disable the 'X-RateLimit-*' headers
+// });
 
-app.use(limiter);
+// app.use(limiter);
 
 app.use(express.json({ limit: '20kb' }));
 
