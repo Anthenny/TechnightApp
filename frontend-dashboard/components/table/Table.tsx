@@ -31,7 +31,7 @@ export const Table: NextPage = (props) => {
 
     setData(responseData.data.formData);
   };
-
+  // TODO fetchdata & useEffect verbeteren.
   useEffect(() => {
     fetchData();
     if (fetchData.length) fetchData();

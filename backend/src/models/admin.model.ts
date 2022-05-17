@@ -10,13 +10,9 @@ export interface adminDocument extends mongoose.Document {
 
 const adminSchema = new mongoose.Schema(
   {
-    firstName: {
+    name: {
       type: String,
       required: [true, 'Een admin heeft een voornaam nodig']
-    },
-    lastName: {
-      type: String,
-      required: [true, 'Een admin heeft een achernaam nodig']
     },
     email: {
       type: String,

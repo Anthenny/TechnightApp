@@ -73,12 +73,12 @@ const Modal: NextPage = () => {
             </div>
 
             <form className={styles.form__container} onSubmit={submitHandler}>
-              {error && <p>{error}</p>}
+              {error && <p data-testid>{error}</p>}
               <div className={styles.form__item}>
                 <p>Naam</p>
                 <input
                   type="text"
-                  placeholder="Volledige naam"
+                  placeholder="Naam"
                   onChange={(e) =>
                     handleChange(e.currentTarget.value, 'fullName')
                   }

@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import FormModel from '../models/form.model';
 import AppError from '../utils/appError';
-
+import { sendEmail } from '../utils/email';
 const catchAsync = require('../utils/catchAsync');
-const sendEmail = require('../utils/email');
 
 export const createForm = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
