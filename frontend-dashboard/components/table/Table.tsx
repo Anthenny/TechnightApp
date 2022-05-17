@@ -22,7 +22,7 @@ export const Table: NextPage = (props) => {
   // TODO fetchdata & useEffect verbeteren.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchData = async () => {
-    const response = await fetch(`${config.API_URL}/form`, {
+    const response = await fetch(`http://localhost:5000/api/v1/form`, {
       method: 'GET'
     });
 

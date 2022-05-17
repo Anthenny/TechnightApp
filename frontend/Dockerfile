@@ -2,10 +2,11 @@ FROM node
 
 WORKDIR /frontend-app
 
-COPY package.json .
+COPY package.json /frontend-app/
+COPY package-lock.json /frontend-app/
 
 RUN npm install
 
-COPY . ./
+COPY . /frontend-app
 
 CMD ["npm", "start", "ios"]

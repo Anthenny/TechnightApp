@@ -7,6 +7,5 @@ module.exports = {
   moduleFileExtensions: ['ts', 'js', 'json', 'node'],
   collectCoverage: true,
   clearMocks: true,
-  coverageDirectory: 'coverage',
-  preset: '@shelf/jest-mongodb'
+  coverageDirectory: 'coverage'
 };

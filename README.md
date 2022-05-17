@@ -4,10 +4,15 @@
 - [Requirements](#markdown-header-requirements)
 - [Getting started](#markdown-header-getting-started)
   - [First time running the application](#markdown-header-first-time-running-the-application)
-  - [Using the mobile application](#markdown-using-the-mobile-application)
+  - [Using the mobile application](#markdown-header-using-the-mobile-application)
   - [Errors](#markdown-header-errors)
-  - [Database](#markdown-header-database)
+- [Database managemens](#markdown-header-database-management)
+  - [GUI](#markdown-header-gui)
+  - [CLI](#markdown-header-cli)
+- [Folders](#markdown-header-database-management)
   - [Backend folders](#markdown-header-backend-folders)
+  - [Frontend dashboard](#markdown-header-frontend-dashboard)
+  - [Frontend](#markdown-header-frontend)
 
 # General
 
@@ -20,7 +25,7 @@ This app is mostly written in Typescript, if we have time we are supposed to con
 - Docker-compose
 - Able to run make commands
 - Expo for the mobile app.
-- Simulator preferably an IOS simulator.
+- Emulator preferably an IOS emulator.
 
 # Getting started
 
@@ -31,7 +36,7 @@ Right now you can only launch the mobile application <manually>, to be able to d
 1. Cd in the frontend-dashboard directory and make a directory called config. Inside of this directory u need to make a folder with the name of config.ts.
 2. After u've done that u need to copy the code that is inside of dist/dist.local.ts to config.ts
 3. Cd in the backend directory and use `make build`. This will build the application getting everything u need to use the API, mobile app and the dashboard. When it's done getting the dependencies it will spin up the containers.
-4. After building and spinning up the containers go to http://localhost:5000/ , please give the containers the time to startup.
+4. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
 
 ## Using the mobile application
 
@@ -43,13 +48,19 @@ Right now you can only launch the mobile application <manually>, to be able to d
 
 If you have errors make sure to use `docker ps`. If you see that a container is down or trying to restart use `docker logs -f <container name or ID>`
 
-## Database
+# Database management
 
-In this project use MongoDB combined with express and mongoose.
+If you want to look around inside of the database this is also possible. U should know that this project uses MongoDB combined with Express and Mongoose. To make sure that you can access the database I've made sure that u can use the graphical user interface or the command line interface.
 
-This project uses Mongo-Express, this allows us to have a web-based MongoDB admin interface. To see this go to http://localhost:5000/ .
+## GUI
+
+This project uses Mongo-Express, this allows us to have a web-based MongoDB admin interface. To see this go to http://localhost:8081/ .
+
+## CLI
 
 We can also use the CLI. To do this run `docker exec -it mongo mongo -u "admin" -p "admin12345"`. This should give u a welcome message. From here on out we can use mongo commands such as `show dbs` and `use <db_name_here>`
+
+# Folders
 
 ## Backend folders
 

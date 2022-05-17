@@ -2,11 +2,11 @@ import { NextPage } from 'next';
 import Head from 'next/head';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import { config } from '../config/config';
+import { config } from '../../config/config';
 
-import { useUserContext } from '../context/authContext';
-import styles from '../styles/Login.module.css';
-import { useValidate } from '../utils/validation-hook';
+import { useUserContext } from '../../context/authContext';
+import { useValidate } from '../../utils/validation-hook';
+import styles from '../../styles/Login.module.css';
 
 interface LoginInputValues {
   email: string;
@@ -16,7 +16,7 @@ interface LoginInputValues {
 const Login: NextPage = () => {
   const [values, setValues] = useState<LoginInputValues>({
     email: '',
-    password: ''
+    password: 't'
   });
 
   const { setUser } = useUserContext();
@@ -64,7 +64,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Logindssss</title>
+        <title>Login</title>
       </Head>
       <div className={styles.login__container}>
         <div className={styles.login__left}>

@@ -28,8 +28,6 @@ export const useValidate = () => {
       isValid = false;
       setError('Vul aub een telefoonnummer in');
     }
-    console.log(`vanuit validatie hook ${error}`);
-    console.log(isValid);
     return isValid;
   };
 

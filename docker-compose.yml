@@ -2,39 +2,40 @@ version: "3"
 
 services:
   node-app:
-    container_name: node-app
-    build: .
+    build:
+      context: backend
+      dockerfile: Dockerfile
     restart: always
     volumes:
-      - ./:/app
+      - ./backend/:/app
       - /app/node_modules
     ports:
       - 5000:5000
     env_file:
-      - ./.env
+      - ./backend/.env
     environment:
       - MONGO_USER=${MONGO_USER}
       - MONGO_PASSWORD=${MONGO_PASSWORD}
-    command: npm run dev
+    command: npm run dev # dit is niet productiewaardig, probeer een verschil te maken tussen dev en prod
     depends_on:
       - mongo 
   
   # TODO volumes fixen wanneer er een update is in de frontend wil ik dat de container ook update zodat deze veranderingen zichtbaar zijn
   frontend-dashboard:
-    container_name: frontend-dashboard
     build: 
-      context: ../frontend-dashboard
+      context: frontend-dashboard
       dockerfile: Dockerfile
     restart: always
+    volumes:
+      - ./frontend-dashboard/:/frontend # ik zou hier /app van maken, kies 1 standaard en blijf die volgen
     ports:
       - 3000:3000
-    command: npm run dev
+    command: npm run dev # dit is niet productiewaardig, probeer een verschil te maken tussen dev en prod
     depends_on:
       - mongo 
  
   mongo:
-    image: mongo
-    container_name: mongo
+    image: mongo #todo versienummer expliciet, version pinning
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
@@ -43,8 +44,7 @@ services:
       - mongo-db:/data/db
     
   mongo-express:
-    image: mongo-express
-    container_name: mongo-express
+    image: mongo-express #todo versienummer expliciet, version pinning
     ports:
       - 8081:8081
     environment:
