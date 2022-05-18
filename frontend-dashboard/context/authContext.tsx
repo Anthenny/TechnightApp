@@ -1,5 +1,8 @@
 import { createContext, useContext, useState } from 'react';
 
+// This file is responsible for the global state of the components that use this userContext.
+// Every component that makes use of userContext is allowed to see the values of the variables end make use of the functions described in this file.
+
 export type userContextData = {
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
@@ -13,7 +16,7 @@ export type userContextData = {
   removeUser: (userId: number) => void;
 };
 
-// initial values
+// Define the initial values of useContext
 export const userContext = createContext<userContextData>({
   isLoggedIn: false,
   setIsLoggedIn: () => null,

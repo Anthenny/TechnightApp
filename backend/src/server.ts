@@ -1,12 +1,10 @@
 import mongoose from 'mongoose';
 require('dotenv').config();
 
-import config from 'config';
 import app from './app';
-// const app = require('./app');
 
-const port = config.get<number>('PORT');
-const mongoURL = `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_IP}:${process.env.MONGO_PORT}/${process.env.DB_NAME}?authSource=admin`;
+const port = process.env.PORT;
+const mongoURL = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.7ueuo.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose
   .connect(mongoURL)

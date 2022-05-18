@@ -34,9 +34,11 @@ Right now you can only launch the mobile application <manually>, to be able to d
 ## First time running the application
 
 1. Cd in the frontend-dashboard directory and make a directory called config. Inside of this directory u need to make a folder with the name of config.ts.
-2. After u've done that u need to copy the code that is inside of dist/dist.local.ts to config.ts
-3. Cd in the backend directory and use `make build`. This will build the application getting everything u need to use the API, mobile app and the dashboard. When it's done getting the dependencies it will spin up the containers.
-4. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
+2. After u've done that u need to copy the code that is inside of dist/dist.local.ts to config.ts.
+3. Remove the .local part of the .env.local file in the root and in the backend directory so all thats left is a .env file.
+4. Use `make build` in the root directory. This will build the application getting everything u need to use the API, mobile app and the dashboard. When it's done getting the dependencies it will spin up the containers for <development>.
+5. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
+6. After building the fronrend u can go to `http://localhost:3000/` . Proceed to login with email: a.dmin@developers.nl and password: Ditishetsupergeheimewachtwoordvandevelopers2022
 
 ## Using the mobile application
 
@@ -44,21 +46,13 @@ Right now you can only launch the mobile application <manually>, to be able to d
 2. Run `expo start` or `npm start` to start up the application.
 3. After u've done this u will need to press i to launch a IOS simulator. If u want the best experience use the iPad 9th generation.
 
+## Running for production
+
+1. Run make up.prod in the root directory to spin up the containers for production
+
 ## Errors
 
 If you have errors make sure to use `docker ps`. If you see that a container is down or trying to restart use `docker logs -f <container name or ID>`
-
-# Database management
-
-If you want to look around inside of the database this is also possible. U should know that this project uses MongoDB combined with Express and Mongoose. To make sure that you can access the database I've made sure that u can use the graphical user interface or the command line interface.
-
-## GUI
-
-This project uses Mongo-Express, this allows us to have a web-based MongoDB admin interface. To see this go to http://localhost:8081/ .
-
-## CLI
-
-We can also use the CLI. To do this run `docker exec -it mongo mongo -u "admin" -p "admin12345"`. This should give u a welcome message. From here on out we can use mongo commands such as `show dbs` and `use <db_name_here>`
 
 # Folders
 

@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  node-app:
+    environment:
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+    command: npm run dev
+  
+  frontend-dashboard:
+    command: npm run dev

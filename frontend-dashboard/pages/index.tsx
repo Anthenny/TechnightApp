@@ -64,7 +64,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Head>
-        <title>Logindssss</title>
+        <title>Login</title>
       </Head>
       <div className={styles.login__container}>
         <div className={styles.login__left}>
