@@ -43,7 +43,7 @@ Right now you can only launch the mobile application <manually>, to be able to d
 ## Using the mobile application
 
 1. Cd in to the frontend directory and use `npm install`.
-2. Run `expo start` or `npm start` to start up the application.
+2. Run `npm start` to start up the application.
 3. After u've done this u will need to press i to launch a IOS simulator. If u want the best experience use the iPad 9th generation.
 
 ## Running for production
