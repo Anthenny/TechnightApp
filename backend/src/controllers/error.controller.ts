@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../utils/appError';
 
+const DUPLICATE_KEY_ERROR_COLLECTION:number = 11000;
+
 export const handleCastErrorDB = (err: any) => {
   const message = `Onjuiste ${err.path}: ${err.value}`;
   return new AppError(message, 400);
@@ -53,7 +55,7 @@ export function globalErrorHandler(
 
   if (process.env.NODE_ENV === 'production') {
     if (err.name === 'CastError') err = handleCastErrorDB(err);
-    if (err.code === 11000) err = handleDuplicateFieldsDB(err);
+    if (err.code === DUPLICATE_KEY_ERROR_COLLECTION) err = handleDuplicateFieldsDB(err);
 
     sendErrorProd(err, res);
   }

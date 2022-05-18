@@ -4,6 +4,19 @@ export const useValidate = () => {
   const [error, setError] = useState<string | null>(null);
   let isValid = true;
 
+  const checkEmail = (email: string) => {
+    if (!email) {
+      return false;
+    }
+
+    // TODO een check met een library uitvoeren zodat de email beter gecontroleerd wordt zie: https://stackoverflow.com/questions/201323/how-can-i-validate-an-email-address-using-a-regular-expression
+    if (!email.match(/\S+@\S+\.\S+/)) {
+      return false;
+    }
+
+    return true;
+  };
+
   const validateInputModal = (
     fullName: string,
     email: string,
@@ -14,14 +27,9 @@ export const useValidate = () => {
       setError('Vul aub een volledige naam in');
     }
 
-    if (!email) {
+    if (!checkEmail(email)) {
       isValid = false;
-      setError('Vul aub een e-mail adres in');
-    }
-
-    if (!email.match(/\S+@\S+\.\S+/)) {
-      isValid = false;
-      setError('Vul aub een geldig e-mail adres in');
+      return setError('Vul aub een geldig e-mail adres in');
     }
 
     if (!phoneNumber) {
@@ -33,12 +41,8 @@ export const useValidate = () => {
 
   const validateInputLogin = async (email: string, password: string) => {
     let isValid = true;
-    if (!email) {
-      isValid = false;
-      return setError('Vul aub een e-mail adres in');
-    }
 
-    if (!email.match(/\S+@\S+\.\S+/)) {
+    if (!checkEmail(email)) {
       isValid = false;
       return setError('Vul aub een geldig e-mail adres in');
     }
@@ -47,7 +51,6 @@ export const useValidate = () => {
       isValid = false;
       return setError('Vul aub een wachtwoord in');
     }
-    console.log(isValid);
     return isValid;
   };
 
