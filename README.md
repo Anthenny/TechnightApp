@@ -40,12 +40,6 @@ Right now you can only launch the mobile application <manually>, to be able to d
 5. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
 6. After building the fronrend u can go to `http://localhost:3000/` . Proceed to login with email: a.dmin@developers.nl and password: Ditishetsupergeheimewachtwoordvandevelopers2022
 
-## Using the mobile application
-
-1. Cd in to the frontend directory and use `npm install`.
-2. Run `npm start` to start up the application.
-3. After u've done this u will need to press i to launch a IOS simulator. If u want the best experience use the iPad 9th generation.
-
 ## Running for production
 
 1. Run make up.prod in the root directory to spin up the containers for production

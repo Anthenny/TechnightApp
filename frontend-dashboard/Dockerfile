@@ -1,4 +1,4 @@
-FROM node:15
+FROM node:17
 
 WORKDIR /app
 
@@ -6,11 +6,13 @@ COPY package.json /app
 
 COPY /package-lock.json /app
 
-RUN npm install
-
 COPY . /app
+
+RUN cd /app && npm install
 
 EXPOSE 3000
 
-CMD ["npm","run", "dev"];
+RUN npm run build
+
+CMD ["npm","run", "start"];
 
