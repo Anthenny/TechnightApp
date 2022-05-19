@@ -1,4 +1,4 @@
-FROM node:17
+FROM node:16.15-alpine3.14
 
 WORKDIR /app
 
@@ -6,9 +6,9 @@ COPY /package.json /app
 
 COPY /package-lock.json /app
 
-RUN npm install
-
 COPY . /app
+
+RUN npm install
 
 EXPOSE 5000
 

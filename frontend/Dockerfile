@@ -1,12 +1,16 @@
-FROM node:17
+FROM node:16.15-alpine3.14
 
-WORKDIR /frontend-app
+RUN npm i -g expo-cli@5.4.6
 
-COPY package.json /frontend-app/
-COPY package-lock.json /frontend-app/
+WORKDIR /app
 
-COPY . /frontend-app
+COPY package.json /app
+COPY package-lock.json /app
+
+COPY . /app
 
 RUN npm install
 
-CMD ["npm", "start", "ios"]
+EXPOSE 19002
+
+CMD ["npm", "run", "start" ]

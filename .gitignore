@@ -1,9 +1,12 @@
 backend/node_modules/
 backend/coverage
-backend/.env/
+backend/.env
+backend/.env.local
+
 frontend/node_modules/
 frontend/.expo/
 .DS_Store
 .env
+.env.local
 # config
 frontend-dashboard/config

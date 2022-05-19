@@ -1,0 +1,64 @@
+version: '3'
+
+services:
+  node_app:
+    build:
+      context: ../backend
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ../backend/:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+
+  frontend_dashboard:
+    build:
+      context: ../frontend-dashboard
+      dockerfile: Dockerfile
+    volumes:
+      - ../frontend-dashboard/:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    depends_on:
+      - node_app
+
+  # TODO Vragen aan Ivo of ports van mongo_db en mongo_express altijd open moeten zijn of alleen in dev.
+  mongo_db:
+    image: mongo:5.0
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - ../mongo_db:/data/db
+
+  mongo_express:
+    image: mongo-express:1.0.0-alpha.4
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo_db
+
+  frontend_app:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile
+    ports:
+      - 19006:19006
+      - 19001:19001
+      - 19002:19002
+    volumes:
+      - ../frontend/:/app/
+      - /app/node_modules
+    tty: true
+    healthcheck:
+      disable: true
+    depends_on:
+      - node_app
+
+# TODO vragen of we volumes mee pushen naar bitbucket of niet
+volumes:
+  mongo_db:
+  notused:
