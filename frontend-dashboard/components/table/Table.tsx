@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Table.module.css';
@@ -7,10 +7,22 @@ import { config } from '../../config/config';
 
 type SortKeys = 'gebruiker' | 'email' | 'telefoonnummer' | 'actie';
 
-export const Table: NextPage = (props) => {
+type Participant = {
+  _id: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
+  // TODO data useState een type participant maken
+  // refference: string;
+  // role: string;
+  // updatedAt: string;
+  // company: string;
+};
+
+export const Table: NextPage = () => {
   const [data, setData] = useState<any>([]);
   const [error, setError] = useState<String | null>();
-  const { setModal } = useModalContext();
+  const { modal, setModal } = useModalContext();
 
   const headers: { key: SortKeys; label: string }[] = [
     { key: 'gebruiker', label: 'Gebruiker' },
@@ -19,9 +31,7 @@ export const Table: NextPage = (props) => {
     { key: 'actie', label: 'Actie' }
   ];
 
-  // TODO fetchdata & useEffect verbeteren.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const fetchData = async () => {
+  const sendRequest = async () => {
     const response = await fetch(`http://localhost:5000/api/v1/form`, {
       method: 'GET'
     });
@@ -31,23 +41,24 @@ export const Table: NextPage = (props) => {
 
     setData(responseData.data.formData);
   };
-  // TODO fetchdata & useEffect verbeteren.
-  useEffect(() => {
-    fetchData();
-    if (fetchData.length) fetchData();
-  }, [fetchData]);
 
-  const deleteHandler = async (id: number) => {
+  // useEffect hook runs once when the component first mounts, I also added the modal as a dependencie so the useEffect runs everytime the modal changes.
+  useEffect(() => {
+    sendRequest();
+  }, [modal]);
+
+  const deleteHandler = async (id: string) => {
     try {
       await fetch(`${config.API_URL}/form/${id}`, {
         method: 'DELETE'
       });
+      sendRequest();
     } catch (err: any) {
       setError(err.message);
     }
   };
 
-  const editHandler = (id: number) => {
+  const editHandler = (id: string) => {
     setModal(true);
     return console.log(`Edited user with an id of: ${id}`);
   };
@@ -68,7 +79,7 @@ export const Table: NextPage = (props) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((participant: any) => {
+            {data.map((participant: Participant) => {
               return (
                 <tr key={participant._id}>
                   <td>{participant.name}</td>

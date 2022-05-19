@@ -21,6 +21,14 @@ const Modal: NextPage = () => {
 
   const { error, setError, validateInputModal, clearError } = useValidate();
 
+  const clearInput = () => {
+    setValues({
+      fullName: '',
+      email: '',
+      phoneNumber: ''
+    });
+  };
+
   const modalHandler = () => {
     setModal(false);
   };
@@ -56,6 +64,8 @@ const Modal: NextPage = () => {
     if (!response.ok) {
       return setError(responseData.message);
     }
+
+    clearInput();
 
     setModal(false);
   };

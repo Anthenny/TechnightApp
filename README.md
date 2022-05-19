@@ -5,6 +5,7 @@
 - [Getting started](#markdown-header-getting-started)
   - [First time running the application](#markdown-header-first-time-running-the-application)
   - [Using the mobile application](#markdown-header-using-the-mobile-application)
+  - [Running for production](#markdown-header-running-for-production)
   - [Errors](#markdown-header-errors)
 - [Database management](#markdown-header-database-management)
 - [Folders](#markdown-header-database-management)
