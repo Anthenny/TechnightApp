@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import FormModel from '../models/form.model';
 import AppError from '../utils/appError';
-
+import { sendEmail } from '../utils/email';
 const catchAsync = require('../utils/catchAsync');
-const sendEmail = require('../utils/email');
 
 export const createForm = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -22,7 +21,7 @@ export const createForm = catchAsync(
 
     const message = `
                       <h3>Beste ${name},</h3></br>
-                      <p style="font-family: sans-serif">In deze email kunt u de overige informatie over de TechNight waar u zich voor heeft aangemeld!</p>
+                      <p style="font-family: sans-serif">In deze email kunt u de overige informatie over de TechNight vinden waar u zich voor heeft aangemeld!</p>
                       <p>Deze maand gaat de TechNight over Flutter en wordt het gepresenteerd door Jeroen Meijer.</p></br>
                       <h4>De volgende onderwerpen zullen besproken worden: </h4>
                       <ul>

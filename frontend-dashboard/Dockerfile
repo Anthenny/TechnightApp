@@ -1,15 +1,18 @@
-FROM node:15
+FROM node:17
 
 WORKDIR /app
 
 COPY package.json /app
 
-RUN npm install
-
-RUN npm install -D @swc/cli @swc/core
+COPY /package-lock.json /app
 
 COPY . /app
 
+RUN cd /app && npm install
+
 EXPOSE 3000
 
-CMD ["npm","run", "dev"];
+RUN npm run build
+
+CMD ["npm","run", "start"];
+

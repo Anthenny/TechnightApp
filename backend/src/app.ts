@@ -20,7 +20,6 @@ app.use(express.json({ limit: '20kb' }));
 
 app.use(corsMiddleware);
 
-// Routes
 app.get('/', (req: Request, res: Response, next: NextFunction) => {
   res.json({
     status: 'succes',
@@ -30,11 +29,10 @@ app.get('/', (req: Request, res: Response, next: NextFunction) => {
 
 routes(app);
 
-// Error handler
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   next(new AppError(`We can not find ${req.originalUrl} on this server`, 404));
 });
 
 app.use(globalErrorHandler);
 
-module.exports = app;
+export default app;

@@ -1,0 +1,55 @@
+version: "3"
+
+services:
+  node-app:
+    build:
+      context: backend
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./backend/:/app
+      - /app/node_modules
+    ports:
+      - 5000:5000
+    env_file:
+      - ./backend/.env
+    environment:
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+  
+  frontend-dashboard:
+    build: 
+      context: frontend-dashboard
+      dockerfile: Dockerfile
+    restart: always
+    volumes:
+      - ./frontend-dashboard/:/app
+      - /app/node_modules
+
+    ports:
+      - 3000:3000
+    depends_on:
+      - node-app 
+
+  # react_native_app:
+  #   build:
+  #     context: frontend
+  #     args:
+  #       - NODE_ENV=development
+  #   environment:
+  #     - NODE_ENV=development
+  #   tty: true
+  #   ports:
+  #     - '19006:19006'
+  #     - '19001:19001'
+  #     - '19002:19002'
+  #   volumes:
+  #     - ./react_native_app:/opt/react_native_app/app:delegated
+  #     - ./react_native_app/package.json:/opt/react_native_app/package.json
+  #     - ./react_native_app/package-lock.json:/opt/react_native_app/package-lock.json
+  #     - notused:/opt/react_native_app/app/node_modules
+  #   healthcheck:
+  #     disable: true
+
+volumes:
+  mongo-db:
