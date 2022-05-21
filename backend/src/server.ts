@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { createAdmin } from './utils/checkAdmin';
 require('dotenv').config();
 
 import app from './app';
@@ -13,15 +14,14 @@ const port = process.env.PORT;
 
 mongoose
   .connect(mongoURLdev)
-  .then(() => {
+  .then(async () => {
+    await createAdmin()
     app.listen(port, () => {
       console.log(`Succesfully connected to DB. Running on ${port}`);
-      console.log(mongoURLdev)
     });
   })
   .catch((e: any) => {
     console.log('Could not connect to db');
     console.log(e.message);
-    console.log(mongoURLdev)
 
   });

@@ -25,7 +25,7 @@ export const userContext = createContext<userContextData>({
     name: undefined,
     email: undefined
   },
-  setUser: (user: User) => null
+  setUser: (user: User | undefined) => null
 });
 
 export const useUserContext = () => useContext(userContext);

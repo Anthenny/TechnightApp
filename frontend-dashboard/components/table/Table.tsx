@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Table.module.css';
 import { config } from '../../config/config';
+import useHttp from '../../hooks/http-hook';
 
 type SortKeys = 'gebruiker' | 'email' | 'telefoonnummer' | 'actie';
 
@@ -20,9 +21,10 @@ type Participant = {
 };
 
 export const Table: NextPage = () => {
+  // TODO data een type geven
   const [data, setData] = useState<any>([]);
-  const [error, setError] = useState<String | null>();
-  const { modal, setModal } = useModalContext();
+  const { modal, setModal, setEditModal, setEditId } = useModalContext();
+  const { errorHttp, sendRequest, clearErrorHttp } = useHttp();
 
   const headers: { key: SortKeys; label: string }[] = [
     { key: 'gebruiker', label: 'Gebruiker' },
@@ -31,34 +33,30 @@ export const Table: NextPage = () => {
     { key: 'actie', label: 'Actie' }
   ];
 
-  const sendRequest = async () => {
-    const response = await fetch(`http://localhost:5000/api/v1/form`, {
-      method: 'GET'
-    });
+  const fetchFormData = async () => {
+    try {
+      const responseData = await sendRequest(`${config.API_URL}/form`, 'GET');
 
-    const responseData = await response.json();
-    if (!response.ok) return setError(responseData.message);
-
-    setData(responseData.data.formData);
+      setData(responseData.data.formData);
+    } catch (err) {}
   };
 
   // useEffect hook runs once when the component first mounts, I also added the modal as a dependencie so the useEffect runs everytime the modal changes.
   useEffect(() => {
-    sendRequest();
+    fetchFormData();
+    console.log('fetching data');
   }, [modal]);
 
   const deleteHandler = async (id: string) => {
     try {
-      await fetch(`${config.API_URL}/form/${id}`, {
-        method: 'DELETE'
-      });
-      sendRequest();
-    } catch (err: any) {
-      setError(err.message);
-    }
+      await sendRequest(`${config.API_URL}/form/${id}`, 'DELETE');
+      fetchFormData();
+    } catch (err: any) {}
   };
 
   const editHandler = (id: string) => {
+    setEditModal(true);
+    setEditId(id);
     setModal(true);
     return console.log(`Edited user with an id of: ${id}`);
   };
@@ -69,7 +67,7 @@ export const Table: NextPage = () => {
         Mensen die zich hebben ingeschreven voor de TechNight!
       </h4>
       <div className={styles.table__container}>
-        {error && <p>{error}</p>}
+        {errorHttp && <p>{errorHttp}</p>}
         <table>
           <thead>
             <tr>

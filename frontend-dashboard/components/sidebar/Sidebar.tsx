@@ -4,13 +4,20 @@ import Link from 'next/link';
 
 import avatarImg from '../../public/Dashboard-avatar.png';
 import homeImg from '../../public/Dashboard-home.png';
-import settingsImg from '../../public/Dashboard-settings.png';
 import logoutImg from '../../public/Dashboard-logout.png';
 import styles from '../../styles/Sidebar.module.css';
+import { useUserContext } from '../../context/authContext';
+import Router from 'next/router';
 
 export const Sidebar: NextPage = () => {
+  const { setUser } = useUserContext();
+
   const logoutHandler = () => {
-    console.log('logged out');
+    setUser({
+      name: undefined,
+      email: undefined
+    });
+    return Router.push('/');
   };
   return (
     <div className={styles.sidebar}>
@@ -31,12 +38,7 @@ export const Sidebar: NextPage = () => {
             </div>
             <p>Home</p>
           </div>
-          <div className={styles.sidebar__link}>
-            <div className={styles.image_style}>
-              <Image src={settingsImg} alt="icon" width={34} height={34} />
-            </div>
-            <p>Settings</p>
-          </div>
+
           <div onClick={logoutHandler} className={styles.sidebar__link}>
             <div className={styles.image_style}>
               <Image src={logoutImg} alt="icon" width={34} height={34} />

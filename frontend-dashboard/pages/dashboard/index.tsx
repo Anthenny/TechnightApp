@@ -9,13 +9,17 @@ import { ModalContext } from '../../context/modalContext';
 
 const Dashboard: NextPage = () => {
   const [modal, setModal] = useState<boolean>(false);
+  const [editModal, setEditModal] = useState<boolean>(false);
+  const [editId, setEditId] = useState<string | undefined>(undefined);
 
   return (
     <div>
       <Head>
         <title>Admin Dashboard</title>
       </Head>
-      <ModalContext.Provider value={{ modal, setModal }}>
+      <ModalContext.Provider
+        value={{ modal, setModal, editModal, setEditModal, editId, setEditId }}
+      >
         <Sidebar />
         <Navbar />
         <Modal />

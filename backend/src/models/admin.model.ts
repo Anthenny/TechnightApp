@@ -12,7 +12,7 @@ const adminSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, 'Een admin heeft een voornaam nodig']
+      required: [true, 'Een admin heeft een naam nodig']
     },
     email: {
       type: String,

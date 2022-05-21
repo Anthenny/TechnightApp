@@ -1,25 +1,45 @@
 import { NextPage } from 'next';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { config } from '../../config/config';
 import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Modal.module.css';
-import { useValidate } from '../../utils/validation-hook';
+import useHttp from '../../hooks/http-hook';
+import { useValidate } from '../../hooks/validation-hook';
 
-interface Values {
+interface FormInputValues {
   fullName: string;
   email: string;
   phoneNumber: string;
 }
 
 const Modal: NextPage = () => {
-  const { modal, setModal } = useModalContext();
-  const [values, setValues] = useState<Values>({
+  const { modal, setModal, editModal, setEditModal, editId, setEditId } =
+    useModalContext();
+  const { errorHttp, sendRequest, clearErrorHttp } = useHttp();
+  const [values, setValues] = useState<FormInputValues>({
     fullName: '',
     email: '',
     phoneNumber: ''
   });
 
   const { error, setError, validateInputModal, clearError } = useValidate();
+
+  const fetchOneParticipant = async (id: string | undefined) => {
+    try {
+      const responseData = await sendRequest(`${config.API_URL}/form/${id}`);
+      setValues({
+        fullName: responseData.data.formData.name,
+        email: responseData.data.formData.email,
+        phoneNumber: responseData.data.formData.phoneNumber
+      });
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    if (editModal) {
+      fetchOneParticipant(editId);
+    }
+  }, [editModal]);
 
   const clearInput = () => {
     setValues({
@@ -30,44 +50,81 @@ const Modal: NextPage = () => {
   };
 
   const modalHandler = () => {
+    clearInput();
     setModal(false);
+    setEditModal(false);
   };
 
   const handleChange = (value: string, key: string) => {
     setValues((prevState) => ({ ...prevState, [key]: value }));
   };
 
+  const postParticipant = async (
+    fullName: string,
+    email: string,
+    phoneNumber: string
+  ) => {
+    try {
+      await sendRequest(
+        `${config.API_URL}/form`,
+        'POST',
+        {
+          'Content-Type': 'application/json'
+        },
+        JSON.stringify({
+          name: fullName,
+          email,
+          phoneNumber
+        })
+      );
+
+      clearInput();
+
+      setModal(false);
+    } catch (err) {}
+  };
+
+  const patchParticipant = async (
+    fullName: string,
+    email: string,
+    phoneNumber: string,
+    id: string | undefined
+  ) => {
+    try {
+      await sendRequest(
+        `${config.API_URL}/form/${id}`,
+        'PATCH',
+        {
+          'Content-Type': 'application/json'
+        },
+        JSON.stringify({
+          name: fullName,
+          email,
+          phoneNumber
+        })
+      );
+    } catch (err) {}
+  };
+
   const submitHandler = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const fullName = values.fullName;
-    const email = values.email;
-    const phoneNumber = values.phoneNumber;
+    const { fullName, email, phoneNumber } = values;
 
     if (!validateInputModal(fullName, email, phoneNumber)) {
       return;
     }
 
-    const response = await fetch(`${config.API_URL}/form`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: fullName,
-        email,
-        phoneNumber
-      })
-    });
-
-    const responseData = await response.json();
-
-    if (!response.ok) {
-      return setError(responseData.message);
+    if (editModal) {
+      patchParticipant(fullName, email, phoneNumber, editId);
     }
 
-    clearInput();
+    if (!editModal) {
+      postParticipant(fullName, email, phoneNumber);
+    }
 
-    setModal(false);
+    setEditId(undefined);
+    clearInput();
+    modalHandler();
   };
 
   return (

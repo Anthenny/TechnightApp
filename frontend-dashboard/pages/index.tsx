@@ -6,7 +6,7 @@ import { config } from '../config/config';
 
 import { useUserContext } from '../context/authContext';
 import styles from '../styles/Login.module.css';
-import { useValidate } from '../utils/validation-hook';
+import { useValidate } from '../hooks/validation-hook';
 
 interface LoginInputValues {
   email: string;
