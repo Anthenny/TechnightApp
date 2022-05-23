@@ -19,10 +19,9 @@ import { createAdminSchema, loginAdminSchema } from '../schemas/admin.schema';
 
 function routes(app: Express) {
   // TODO routes beveiligen met behulp van jsonwebtoken
-  // app.get('/api/v1/form', protect, getAllFormData);
   app.get('/api/v1/form', getAllFormData);
   app.get('/api/v1/form/:id', getOneFormData);
-  app.patch('/api/v1/form/:id', updateFormData);
+  app.put('/api/v1/form/:id', updateFormData);
   app.post('/api/v1/form', validateResource(createFormSchema), createForm);
   app.delete('/api/v1/form/:id', deleteFormData);
 

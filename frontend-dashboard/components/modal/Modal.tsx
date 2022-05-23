@@ -15,14 +15,14 @@ interface FormInputValues {
 const Modal: NextPage = () => {
   const { modal, setModal, editModal, setEditModal, editId, setEditId } =
     useModalContext();
-  const { errorHttp, sendRequest, clearErrorHttp } = useHttp();
+  const { sendRequest } = useHttp();
   const [values, setValues] = useState<FormInputValues>({
     fullName: '',
     email: '',
     phoneNumber: ''
   });
 
-  const { error, setError, validateInputModal, clearError } = useValidate();
+  const { error, validateInputModal, clearError } = useValidate();
 
   const fetchOneParticipant = async (id: string | undefined) => {
     try {
@@ -59,7 +59,7 @@ const Modal: NextPage = () => {
     setValues((prevState) => ({ ...prevState, [key]: value }));
   };
 
-  const postParticipant = async (
+  const createParticipant = async (
     fullName: string,
     email: string,
     phoneNumber: string
@@ -84,7 +84,7 @@ const Modal: NextPage = () => {
     } catch (err) {}
   };
 
-  const patchParticipant = async (
+  const updateParticipant = async (
     fullName: string,
     email: string,
     phoneNumber: string,
@@ -93,7 +93,7 @@ const Modal: NextPage = () => {
     try {
       await sendRequest(
         `${config.API_URL}/form/${id}`,
-        'PATCH',
+        'PUT',
         {
           'Content-Type': 'application/json'
         },
@@ -115,11 +115,11 @@ const Modal: NextPage = () => {
     }
 
     if (editModal) {
-      patchParticipant(fullName, email, phoneNumber, editId);
+      updateParticipant(fullName, email, phoneNumber, editId);
     }
 
     if (!editModal) {
-      postParticipant(fullName, email, phoneNumber);
+      createParticipant(fullName, email, phoneNumber);
     }
 
     setEditId(undefined);
@@ -140,7 +140,7 @@ const Modal: NextPage = () => {
             </div>
 
             <form className={styles.form__container} onSubmit={submitHandler}>
-              {error && <p data-testid>{error}</p>}
+              {error && <p>{error}</p>}
               <div className={styles.form__item}>
                 <p>Naam</p>
                 <input
