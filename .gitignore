@@ -6,5 +6,4 @@ frontend/.expo/
 frontend-dashboard/config
 .DS_Store
 .env
-.gitignore
 mongo_db

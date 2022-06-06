@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
-const catchAsync = require('../utils/catchAsync');
+import { catchAsync } from '../utils/catchAsync';
 
-export const sendEmail = catchAsync(async (options: any) => {
+export const sendEmail = async (options: any) => {
   // transporter
   const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -25,4 +25,4 @@ export const sendEmail = catchAsync(async (options: any) => {
       console.log('Email sent: ' + info.response);
     }
   });
-});
+};

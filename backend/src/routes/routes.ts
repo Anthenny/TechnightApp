@@ -10,20 +10,22 @@ import {
 } from '../controllers/form.controller';
 import { createFormSchema } from '../schemas/form.schema';
 
-import {
-  loginAdmin,
-  protect,
-  signupAdmin
-} from '../controllers/admin.controller';
+import { loginAdmin, signupAdmin } from '../controllers/admin.controller';
 import { createAdminSchema, loginAdminSchema } from '../schemas/admin.schema';
+import { protect } from '../controllers/auth.controller';
 
 function routes(app: Express) {
   // TODO routes beveiligen met behulp van jsonwebtoken
-  app.get('/api/v1/form', getAllFormData);
-  app.get('/api/v1/form/:id', getOneFormData);
-  app.put('/api/v1/form/:id', updateFormData);
-  app.post('/api/v1/form', validateResource(createFormSchema), createForm);
-  app.delete('/api/v1/form/:id', deleteFormData);
+  app.get('/api/v1/form', protect, getAllFormData);
+  app.get('/api/v1/form/:id', protect, getOneFormData);
+  app.put('/api/v1/form/:id', protect, updateFormData);
+  app.post(
+    '/api/v1/form',
+    protect,
+    validateResource(createFormSchema),
+    createForm
+  );
+  app.delete('/api/v1/form/:id', protect, deleteFormData);
 
   app.post('/api/v1/login', loginAdmin);
   app.post('/api/v1/signup', validateResource(createAdminSchema), signupAdmin);

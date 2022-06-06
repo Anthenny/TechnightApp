@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import AppError from '../utils/appError';
 
-const DUPLICATE_KEY_ERROR_COLLECTION:number = 11000;
+const DUPLICATE_KEY_ERROR_COLLECTION: number = 11000;
 
 export const handleCastErrorDB = (err: any) => {
   const message = `Onjuiste ${err.path}: ${err.value}`;
@@ -40,6 +40,12 @@ export const sendErrorProd = (err: any, res: Response) => {
   });
 };
 
+export const handleJWTError = () =>
+  new AppError('Je token is niet geldig, log opnieuw in', 401);
+
+export const handleJWTExpired = () =>
+  new AppError('Je token is verlopen! Log opnieuw in.', 401);
+
 export function globalErrorHandler(
   err: any,
   req: Request,
@@ -55,7 +61,10 @@ export function globalErrorHandler(
 
   if (process.env.NODE_ENV === 'production') {
     if (err.name === 'CastError') err = handleCastErrorDB(err);
-    if (err.code === DUPLICATE_KEY_ERROR_COLLECTION) err = handleDuplicateFieldsDB(err);
+    if (err.code === DUPLICATE_KEY_ERROR_COLLECTION)
+      err = handleDuplicateFieldsDB(err);
+    if (err.name === 'JsonWebTokenError') err = handleJWTError();
+    if (err.name === 'TokenExpiredError') err = handleJWTExpired();
 
     sendErrorProd(err, res);
   }

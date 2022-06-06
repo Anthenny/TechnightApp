@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 import FormModel from '../models/form.model';
 import AppError from '../utils/appError';
 import { sendEmail } from '../utils/email';
-const catchAsync = require('../utils/catchAsync');
+import { catchAsync } from '../utils/catchAsync';
 
 export const createForm = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
@@ -40,7 +40,7 @@ export const createForm = catchAsync(
     try {
       await sendEmail({
         email,
-        subject: 'Informatie over de TechNight!',
+        subject: "Anna's accessoires orderbevestiging",
         message
       });
     } catch (err) {
@@ -73,8 +73,6 @@ export const getAllFormData = catchAsync(
 export const getOneFormData = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
     const formData = await FormModel.findById(req.params.id);
-
-    console.log(formData);
 
     if (!formData) {
       return next(

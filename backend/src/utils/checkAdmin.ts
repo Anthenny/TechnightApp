@@ -6,7 +6,7 @@ const findAdmin = async (email: string) => {
   return admin;
 };
 
-export const createAdmin = async () => {
+export const createAdminIfNotExists = async () => {
   if (await findAdmin(process.env.ADMIN_EMAIL)) return;
 
   const hashedPassword = await hashPassword(process.env.ADMIN_PASSWORD);
