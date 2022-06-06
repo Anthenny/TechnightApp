@@ -19,7 +19,9 @@ const useHttp = () => {
 
         const responseData = await response.json();
 
-        if (!response.ok) return setErrorHttp(responseData.message);
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
 
         return responseData;
       } catch (err: any) {
@@ -36,6 +38,7 @@ const useHttp = () => {
 
   return {
     errorHttp,
+    setErrorHttp,
     sendRequest,
     clearErrorHttp
   };

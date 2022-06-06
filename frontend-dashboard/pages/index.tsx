@@ -19,7 +19,7 @@ const Login: NextPage = () => {
     password: ''
   });
 
-  const { setUser } = useUserContext();
+  const { user, setUser } = useUserContext();
 
   const { error, setError, validateInputLogin, clearError } = useValidate();
 
@@ -54,11 +54,15 @@ const Login: NextPage = () => {
       return setError(responseData.message);
     }
 
+    console.log(responseData);
+
     setUser({
-      email: responseData.admin.email,
-      name: responseData.admin.name
+      email: responseData.data.admin.email,
+      name: responseData.data.admin.name,
+      token: responseData.data.admin.token
     });
 
+    console.log(user);
     return Router.push('/dashboard');
   };
   return (

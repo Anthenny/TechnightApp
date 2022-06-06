@@ -44,7 +44,6 @@ export const Table: NextPage = () => {
   // useEffect hook runs once when the component first mounts, I also added the modal as a dependencie so the useEffect runs everytime the modal changes.
   useEffect(() => {
     fetchFormData();
-    console.log('fetching data');
   }, [modal]);
 
   const deleteHandler = async (id: string) => {
@@ -58,7 +57,6 @@ export const Table: NextPage = () => {
     setEditModal(true);
     setEditId(id);
     setModal(true);
-    return console.log(`Edited user with an id of: ${id}`);
   };
 
   return (
@@ -66,8 +64,12 @@ export const Table: NextPage = () => {
       <h4 className={styles.table__header}>
         Mensen die zich hebben ingeschreven voor de TechNight!
       </h4>
+      {errorHttp && (
+        <div className={styles.table__error}>
+          <p>{errorHttp}</p>
+        </div>
+      )}
       <div className={styles.table__container}>
-        {errorHttp && <p>{errorHttp}</p>}
         <table>
           <thead>
             <tr>

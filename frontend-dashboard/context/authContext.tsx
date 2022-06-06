@@ -3,6 +3,7 @@ import { createContext, useContext, useState } from 'react';
 type User = {
   email: string | undefined;
   name: string | undefined;
+  token: string | undefined;
 };
 
 // This file is responsible for the global state of the components that use this userContext.
@@ -13,6 +14,7 @@ export type userContextData = {
   user: {
     name: string | undefined;
     email: string | undefined;
+    token: string | undefined;
   };
   setUser: (user: User) => void;
 };
@@ -23,7 +25,8 @@ export const userContext = createContext<userContextData>({
   setIsLoggedIn: () => null,
   user: {
     name: undefined,
-    email: undefined
+    email: undefined,
+    token: undefined
   },
   setUser: (user: User | undefined) => null
 });

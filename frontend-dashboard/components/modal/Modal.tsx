@@ -15,7 +15,7 @@ interface FormInputValues {
 const Modal: NextPage = () => {
   const { modal, setModal, editModal, setEditModal, editId, setEditId } =
     useModalContext();
-  const { sendRequest } = useHttp();
+  const { errorHttp, setErrorHttp, sendRequest, clearErrorHttp } = useHttp();
   const [values, setValues] = useState<FormInputValues>({
     fullName: '',
     email: '',
@@ -32,7 +32,9 @@ const Modal: NextPage = () => {
         email: responseData.data.formData.email,
         phoneNumber: responseData.data.formData.phoneNumber
       });
-    } catch (err) {}
+    } catch (err: any) {
+      setErrorHttp(err.message);
+    }
   };
 
   useEffect(() => {
@@ -53,6 +55,7 @@ const Modal: NextPage = () => {
     clearInput();
     setModal(false);
     setEditModal(false);
+    clearErrorHttp();
   };
 
   const handleChange = (value: string, key: string) => {
@@ -141,6 +144,8 @@ const Modal: NextPage = () => {
 
             <form className={styles.form__container} onSubmit={submitHandler}>
               {error && <p>{error}</p>}
+              {/* TODO fix errorHttp bij elke pagina die gebruik maakt van httpclient */}
+              {errorHttp && <p>{errorHttp}</p>}
               <div className={styles.form__item}>
                 <p>Naam</p>
                 <input

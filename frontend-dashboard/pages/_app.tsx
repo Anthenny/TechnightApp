@@ -6,6 +6,7 @@ import { userContext } from '../context/authContext';
 type User = {
   email: string | undefined;
   name: string | undefined;
+  token: string | undefined;
 };
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -13,7 +14,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   // TODO vraag hulp hiermee ( ik defineer al de init waarde in authcontext)
   const [user, setUser] = useState<User>({
     name: undefined,
-    email: undefined
+    email: undefined,
+    token: undefined
   });
 
   return (
