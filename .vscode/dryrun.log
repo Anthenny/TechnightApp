@@ -1,4 +1,5 @@
-make.exe --dry-run --always-make --keep-going --print-directory
-'make.exe' is not recognized as an internal or external command,
-operable program or batch file.
-
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/anthenny/Desktop/developers_nl/technight-app'
+docker-compose -f docker/docker-compose.yml -f docker/docker-compose.dev.yml up -d --remove-orphans
+make: Leaving directory '/home/anthenny/Desktop/developers_nl/technight-app'
+ 

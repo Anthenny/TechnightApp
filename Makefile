@@ -10,3 +10,5 @@ down: # Down containers for development
 prod: # Spin up the container for development
 	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d --remove-orphans
 
+prod.build: # Spin up the container for development
+	docker-compose -f docker/docker-compose.yml -f docker/docker-compose.prod.yml up -d --build --remove-orphans

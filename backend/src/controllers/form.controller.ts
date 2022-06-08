@@ -40,7 +40,7 @@ export const createForm = catchAsync(
     try {
       await sendEmail({
         email,
-        subject: "Anna's accessoires orderbevestiging",
+        subject: "Informatie TechNight",
         message
       });
     } catch (err) {

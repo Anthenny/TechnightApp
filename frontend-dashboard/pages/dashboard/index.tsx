@@ -16,6 +16,7 @@ const Dashboard: NextPage = () => {
     <div>
       <Head>
         <title>Admin Dashboard</title>
+        <link rel='icon' href='/developer-favicon.png' />
       </Head>
       <ModalContext.Provider
         value={{ modal, setModal, editModal, setEditModal, editId, setEditId }}

@@ -15,13 +15,11 @@ import { createAdminSchema, loginAdminSchema } from '../schemas/admin.schema';
 import { protect } from '../controllers/auth.controller';
 
 function routes(app: Express) {
-  // TODO routes beveiligen met behulp van jsonwebtoken
   app.get('/api/v1/form', protect, getAllFormData);
   app.get('/api/v1/form/:id', protect, getOneFormData);
   app.put('/api/v1/form/:id', protect, updateFormData);
   app.post(
     '/api/v1/form',
-    protect,
     validateResource(createFormSchema),
     createForm
   );

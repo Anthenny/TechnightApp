@@ -23,15 +23,15 @@ This app is mostly written in Typescript, if we have time we are supposed to con
 - Docker
 - Docker-compose
 - Able to run make commands
-- Emulator preferably an IOS emulator.
+- Emulator preferably an IOS emulator. (It is possible to run the app without an emulator.)
 
 # Getting started
 
 ## First time running the application
 
-1. Cd in the frontend-dashboard directory and make a directory called config. Inside of this directory u need to make a folder with the name of config.ts.
-2. After u've done that u need to copy the code that is inside of dist/dist.local.ts to config.ts.
-3. Remove the .local part of the .env.local file in the root and in the backend directory so all thats left is a .env file.
+1. Cd in the frontend-dashboard directory and make a directory called config. Inside of this directory u need to make a file with the name of config.ts.
+2. After u've done that u need to remove the .example part of the config.ts.example file that is located in the config directory.
+3. Remove the .local part of the .env.local file in the docker and in the backend directory so all thats left is a .env file.
 4. Use `make build` in the root directory. This will build the application getting everything u need to use the API, mobile app and the dashboard. When it's done getting the dependencies it will spin up the containers for <development>.
 5. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
 6. After building the frontend u can go to `http://localhost:3000/` . Proceed to login with email: a.dmin@developers.nl and password: Ditishetsupergeheimewachtwoordvandevelopers2022
@@ -46,8 +46,8 @@ Because I'm assuming that no one has the emulator I decided to run the mobile ap
 
 ## Running for production
 
-1. Run make up.prod in the root directory to spin up the containers for production
-2. For production we are using a database that is hosted online at mongodb. (TODO vraag Ivo wat de juiste procedure is hiervoor.)
+1. Change the database link from `mongoDevURL` to `mongoProdURL` In the backend/src/server.ts on line 16.
+2. Run make up.prod in the root directory to spin up the containers for production
 
 ## Errors
 
@@ -55,7 +55,7 @@ If you have errors make sure to use `docker ps`. If you see that a container is 
 
 # Database management
 
-To manage our database I use mongo express.
+To manage our database in development I used mongo express.
 
 1. Go to `http://localhost:8081/`.
 2. Login with username: admin password: admin12345

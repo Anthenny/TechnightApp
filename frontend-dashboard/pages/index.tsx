@@ -35,7 +35,7 @@ const Login: NextPage = () => {
 
     if (!validateInputLogin(email, password)) {
       return;
-    }
+    } 
 
     const response = await fetch(`${config.API_URL}/login`, {
       method: 'POST',
@@ -54,21 +54,19 @@ const Login: NextPage = () => {
       return setError(responseData.message);
     }
 
-    console.log(responseData);
-
     setUser({
       email: responseData.data.admin.email,
       name: responseData.data.admin.name,
-      token: responseData.data.admin.token
+      token: responseData.token
     });
 
-    console.log(user);
     return Router.push('/dashboard');
   };
   return (
     <>
       <Head>
         <title>Login</title>
+        <link rel='icon' href='/developer-favicon.png' />
       </Head>
       <div className={styles.login__container}>
         <div className={styles.login__left}>

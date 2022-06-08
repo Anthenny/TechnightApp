@@ -2,6 +2,7 @@ import type { NextPage } from 'next';
 import { useEffect, useState, useCallback } from 'react';
 
 import { useModalContext } from '../../context/modalContext';
+import { useUserContext } from '../../context/authContext';
 import styles from '../../styles/Table.module.css';
 import { config } from '../../config/config';
 import useHttp from '../../hooks/http-hook';
@@ -25,6 +26,7 @@ export const Table: NextPage = () => {
   const [data, setData] = useState<any>([]);
   const { modal, setModal, setEditModal, setEditId } = useModalContext();
   const { errorHttp, sendRequest, clearErrorHttp } = useHttp();
+  const { user, setUser } = useUserContext();
 
   const headers: { key: SortKeys; label: string }[] = [
     { key: 'gebruiker', label: 'Gebruiker' },
@@ -35,7 +37,9 @@ export const Table: NextPage = () => {
 
   const fetchFormData = async () => {
     try {
-      const responseData = await sendRequest(`${config.API_URL}/form`, 'GET');
+      const responseData = await sendRequest(`${config.API_URL}/form`, 'GET', {
+        'Authorization': `Bearer ${user.token}`
+      });
 
       setData(responseData.data.formData);
     } catch (err) {}

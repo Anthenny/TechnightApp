@@ -32,27 +32,5 @@ services:
     volumes:
       - ../mongo_db:/data/db
 
-  mongo_express:
-    image: mongo-express:1.0.0-alpha.4
-    restart: always
-    ports:
-      - 8081:8081
-    depends_on:
-      - node_app
-
-  frontend_app:
-    build:
-      context: ../frontend
-      dockerfile: Dockerfile
-    ports:
-      - 19006:19006
-      - 19002:19002
-    volumes:
-      - ../frontend/:/app/
-      - /app/node_modules
-    tty: true
-    depends_on:
-      - node_app
-
 volumes:
   mongo_db:

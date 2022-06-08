@@ -15,7 +15,8 @@ export const Sidebar: NextPage = () => {
   const logoutHandler = () => {
     setUser({
       name: undefined,
-      email: undefined
+      email: undefined,
+      token: undefined
     });
     return Router.push('/');
   };
