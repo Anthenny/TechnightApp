@@ -52,7 +52,9 @@ export const Table: NextPage = () => {
 
   const deleteHandler = async (id: string) => {
     try {
-      await sendRequest(`${config.API_URL}/form/${id}`, 'DELETE');
+      await sendRequest(`${config.API_URL}/form/${id}`, 'DELETE', {
+        'Authorization': `Bearer ${user.token}`
+      });
       fetchFormData();
     } catch (err: any) {}
   };

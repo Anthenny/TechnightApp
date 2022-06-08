@@ -5,6 +5,7 @@ import { useModalContext } from '../../context/modalContext';
 import styles from '../../styles/Modal.module.css';
 import useHttp from '../../hooks/http-hook';
 import { useValidate } from '../../hooks/validation-hook';
+import { useUserContext } from '../../context/authContext';
 
 interface FormInputValues {
   fullName: string;
@@ -21,6 +22,8 @@ const Modal: NextPage = () => {
     email: '',
     phoneNumber: ''
   });
+  const { user } = useUserContext();
+
 
   const { error, validateInputModal, clearError } = useValidate();
 
@@ -98,7 +101,8 @@ const Modal: NextPage = () => {
         `${config.API_URL}/form/${id}`,
         'PUT',
         {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         },
         JSON.stringify({
           name: fullName,
