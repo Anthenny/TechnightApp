@@ -3,7 +3,7 @@ backend/coverage
 backend/.env
 frontend/node_modules/
 frontend/.expo/
-frontend-dashboard/config
+frontend-dashboard/config/config.ts
 .DS_Store
 .env
 mongo_db

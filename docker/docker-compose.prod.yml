@@ -11,7 +11,7 @@ services:
       - NODE_ENV=production
 
   frontend_dashboard:
-    command: npm run prod
+    command: npm run start
 
   mongo_db:
     environment:
