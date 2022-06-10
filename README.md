@@ -29,7 +29,7 @@ This app is mostly written in Typescript, if we have time we are supposed to con
 
 ## First time running the application
 
-1. Remove the .example part of the config.ts.example file that is located in the config directory.
+1. CD into the frontend-dashboard dir and remove the .example part of the config.ts.example file that is located in the config directory.
 3. Remove the .local part of the .env.local file in the docker and in the backend directory so all thats left is a .env file.
 4. Use `make build` in the root directory. This will build the application getting everything u need to use the API, mobile app and the dashboard. When it's done getting the dependencies it will spin up the containers for <development>.
 5. After building and spinning up the containers go to http://localhost:5000/,please give the containers the time to startup. If it's succesful u should see `status: succes, message: you did it`
