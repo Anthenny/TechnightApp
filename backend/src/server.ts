@@ -14,7 +14,7 @@ const mongoDevURL = `mongodb://${process.env.MONGO_USER_DEV}:${process.env.MONGO
 const mongoProdURL = `mongodb+srv://productieAdminAnnasAccessoires:DitIsHetSuperGeheimeWachtWoordQwErTyUIOP@cluster0.cpirwvr.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 mongoose
-  .connect(mongoDevURL)
+  .connect(mongoProdURL)
   .then(async () => {
     await createAdminIfNotExists();
     app.listen(port, () => {
